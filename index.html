@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Hub - Dark Revamp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Global Resets and Box Sizing */
+      * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+      }
+
+      html {
+          height: 100%;
+      }
+
+      body {
+          font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          min-height: 100%;
+          background-color: #0a0a0a;
+          color: #e0e0e0;
+          overflow-y: auto;
+          line-height: 1.6;
+      }
+
+      /* Custom Scrollbar (WebKit Browsers) */
+      ::-webkit-scrollbar {
+          width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+          background: #1a1a1a;
+      }
+      ::-webkit-scrollbar-thumb {
+          background-color: #333;
+          border-radius: 10px;
+          border: 2px solid #1a1a1a;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+          background-color: #444;
+      }
+
+      /* Header Styling */
+      header {
+          text-align: center;
+          padding: 50px 20px 30px 20px;
+      }
+
+      header h1 {
+          font-size: 2.8em;
+          font-weight: 600;
+          color: #f0f0f0;
+          letter-spacing: 1px;
+      }
+
+      /* Main Content Container */
+      .container {
+          display: grid;
+          justify-content: center;
+          grid-template-columns: repeat(auto-fit, 190px);
+          gap: 35px;
+          max-width: 1300px;
+          width: 100%;
+          padding: 20px 40px 60px 40px;
+          margin: 0 auto;
+      }
+
+      /* Game Card Styling */
+      .game-card {
+          width: 190px;
+          background-color: #1c1c1c;
+          border-radius: 10px;
+          padding: 15px;
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+          transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 15px;
+          text-align: center;
+          overflow: hidden;
+      }
+
+      .game-card:hover {
+          transform: translateY(-5px);
+          background-color: #2a2a2a;
+          border-color: rgba(255, 255, 255, 0.12);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      }
+
+      .game-card img {
+          width: 100%;
+          height: 140px;
+          border-radius: 6px;
+          object-fit: cover;
+          display: block;
+      }
+
+      .game-name {
+          font-size: 1rem;
+          font-weight: 500;
+          line-height: 1.4;
+          flex-grow: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 40px;
+          color: #f0f0f0;
+          padding: 0 5px;
+          width: 100%;
+      }
+
+      .game-button {
+          background-color: #373737;
+          color: #e0e0e0;
+          padding: 10px 0;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 0.85rem;
+          font-weight: 600;
+          width: 100%;
+          margin-top: auto;
+          transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+          text-align: center;
+          letter-spacing: 0.5px;
+      }
+
+      .game-button:hover {
+          background-color: #505050;
+          color: #fff;
+          transform: scale(1.02);
+      }
+
+      /* Modal Styles */
+      .modal {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(10, 10, 10, 0.9);
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+          animation: fadeIn 0.3s ease-out;
+      }
+
+      @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+      }
+
+      .modal-content {
+          background-color: #1a1a1a;
+          width: 90%;
+          height: 90%;
+          max-width: 1400px;
+          max-height: 800px;
+          position: relative;
+          border-radius: 10px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+          overflow: hidden;
+          animation: scaleUp 0.35s cubic-bezier(0.165, 0.840, 0.440, 1.000);
+      }
+
+      @keyframes scaleUp {
+          from { transform: scale(0.95) translateY(10px); opacity: 0; }
+          to { transform: scale(1) translateY(0); opacity: 1; }
+      }
+
+      .modal-content iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+          background-color: #111;
+      }
+
+      .close-btn {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          background-color: transparent;
+          color: #aaa;
+          border: none;
+          border-radius: 50%;
+          width: 36px;
+          height: 36px;
+          font-size: 22px;
+          cursor: pointer;
+          transition: color 0.3s ease, transform 0.3s ease;
+          line-height: 36px;
+          text-align: center;
+          z-index: 1001;
+          text-shadow: 0 0 4px rgba(0,0,0,0.7);
+      }
+
+      .close-btn:hover {
+          color: #fff;
+          transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Game Hub</h1>
+    </header>
+
+    <div class="container">
+      <!-- Existing Game Cards -->
+      <div class="game-card" onclick="window.location.href='./granny'">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Granny_Game_Logo.png"
+          alt="Granny"
+        />
+        <div class="game-name">Granny</div>
+        <button class="game-button">Play Game</button>
+      </div>
+
+      <div class="game-card" onclick="window.location.href='./granny2'">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Granny_Game_Logo.png"
+          alt="Granny 2"
+        />
+        <div class="game-name">Granny 2</div>
+        <button class="game-button">Play Game</button>
+      </div>
+
+      <div
+        class="game-card"
+        onclick="openGame('https://script.google.com/macros/s/AKfycbx_-xD1Y9hG-1k_8ibsBhrWHUFud7t58ARoyOcKup3bFvo5nIYQxO-lIlcZpALmSEx5Hg/exec')"
+      >
+        <img
+          src="https://www.nintendo.com/eu/media/images/10_share_images/games_15/game_boy_advance_7/H2x1_GBA_PokemonEmerald_enGB_image1600w.jpg"
+          alt="Pokemon Emerald"
+        />
+        <div class="game-name">Pokemon Emerald</div>
+        <button class="game-button">Play Game</button>
+      </div>
+      <div
+        class="game-card"
+        onclick="openGame('https://script.google.com/macros/s/AKfycbxWYXzXN3TRwxELxgrTkjmE5hyqPMgzdNn6clWSzVcU-m0m9MDdHHb-VP-VDnz06vNe/exec')"
+      >
+        <img
+          src="https://images.igdb.com/igdb/image/upload/t_cover_big/co1zip.jpg"
+          alt="Pokemon Leaf Green"
+        />
+        <div class="game-name">Pokemon Leaf Green</div>
+        <button class="game-button">Play Game</button>
+      </div>
+      <div
+        class="game-card"
+        onclick="openGame('https://script.google.com/macros/s/AKfycbwPWcmKvRggYtQsemkyBJ9w514oWlSDdCXgB9apslY2d6a3DHsG7esJpzHTR9Kuj-1L/exec')"
+      >
+        <img
+          src="https://cdn2.steamgriddb.com/logo/9d47b7e0633cd02a2673a0f9bdd86006.png"
+          alt="Pokemon Unbound"
+        />
+        <div class="game-name">Pokemon Unbound</div>
+        <button class="game-button">Play Game</button>
+      </div>
+      <div
+        class="game-card"
+        onclick="openGame('https://script.google.com/macros/s/AKfycbwQW_VSyv_8hMT4GhDQOEG9Nz43Nr8GoApqayqV9GfhPiwpJkqfA8_F32a2V00ckS_F/exec')"
+      >
+        <img
+          src="https://vignette.wikia.nocookie.net/pokemongamepedia/images/4/42/Pokemon_Ruby_boxart.png/revision/latest/scale-to-width-down/340?cb=20170302180611"
+          alt="Pokemon Ruby"
+        />
+        <div class="game-name">Pokemon Ruby</div>
+        <button class="game-button">Play Game</button>
+      </div>
+      <div
+        class="game-card"
+        onclick="openGame('https://script.google.com/macros/s/AKfycbx_-G2lFbShABZ0FVfQ_hmiMlql7ihFVpx6hRggQQH-LOjw5g-GTYWUmFdmghY_2_9J/exec')"
+      >
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Pokemon_Green_English.png"
+          alt="Pokemon Green"
+        />
+        <div class="game-name">Pokemon Green</div>
+        <button class="game-button">Play Game</button>
+      </div>
+    </div>
+
+    <div class="modal" id="gameModal">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeModal()" title="Close">
+          X
+        </button>
+        <iframe id="gameIframe" src="" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <script>
+      const modal = document.getElementById('gameModal');
+      const iframe = document.getElementById('gameIframe');
+
+      function openGame(url) {
+          iframe.src = url;
+          modal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+          iframe.src = '';
+          modal.style.display = 'none';
+          document.body.style.overflow = '';
+      }
+
+      modal.addEventListener('click', function(event) {
+          if (event.target === modal) {
+              closeModal();
+          }
+      });
+
+      document.addEventListener('keydown', function(event) {
+          if (event.key === 'Escape' && modal.style.display === 'flex') {
+              closeModal();
+          }
+      });
+    </script>
+  </body>
+</html>
