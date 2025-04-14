@@ -52,6 +52,13 @@
           </div>
 
           <script>
+            document.addEventListener('keydown', function(event) {
+              if (event.key === '\\') {
+                window.location.href = './index.html';
+              }
+            });
+          </script>
+          <script>
             YaGames.init().then((ysdk) => {
               console.log("Yandex SDK initialized")
               window.ysdk = ysdk
