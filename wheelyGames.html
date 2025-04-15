@@ -1,1 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+<style>
+  .back-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #111;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 9999;
+    display: none;
+    transition: 0.2s;
+  }
+  .back-btn:hover {
+    background: #333;
+  }
+</style>
 
+    <style>
+      /* Global Resets and Box Sizing */
+      * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+      }
+
+      html {
+          height: 100%;
+      }
+
+      body {
+          font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          min-height: 100%;
+          background-color: #0a0a0a;
+          color: #e0e0e0;
+          overflow-y: auto;
+          line-height: 1.6;
+      }
+
+      /* Custom Scrollbar (WebKit Browsers) */
+      ::-webkit-scrollbar {
+          width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+          background: #1a1a1a;
+      }
+      ::-webkit-scrollbar-thumb {
+          background-color: #333;
+          border-radius: 10px;
+          border: 2px solid #1a1a1a;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+          background-color: #444;
+      }
+
+      /* Header Styling */
+      header {
+          text-align: center;
+          padding: 50px 20px 30px 20px;
+      }
+
+      header h1 {
+          font-size: 2.8em;
+          font-weight: 600;
+          color: #f0f0f0;
+          letter-spacing: 1px;
+      }
+
+      /* Main Content Container */
+      .container {
+          display: grid;
+          justify-content: center;
+          grid-template-columns: repeat(auto-fit, 190px);
+          gap: 35px;
+          max-width: 1300px;
+          width: 100%;
+          padding: 20px 40px 60px 40px;
+          margin: 0 auto;
+      }
+
+	.game-card {
+    	width: 190px;
+    	background-color: #1c1c1c;
+    	border-radius: 10px;
+    	padding: 10px;
+    	border: 1px solid rgba(255, 255, 255, 0.05);
+    	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    	transition: all 0.3s ease;
+    	cursor: pointer;
+    	display: flex;
+    	flex-direction: column;
+    	align-items: center;
+    	gap: 10px;
+    	text-align: center;
+    	height: 230px; /* NEW FIXED HEIGHT */
+	}
+
+
+      .game-card:hover {
+          transform: translateY(-5px);
+          background-color: #2a2a2a;
+          border-color: rgba(255, 255, 255, 0.12);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      }
+
+      .game-card img {
+          width: 100%;
+          height: 140px;
+          border-radius: 6px;
+          object-fit: cover;
+          display: block;
+      }
+
+      .game-name {
+          font-size: 1rem;
+          font-weight: 500;
+          line-height: 1.4;
+          flex-grow: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 40px;
+          color: #f0f0f0;
+          padding: 0 5px;
+          width: 100%;
+      }
+
+      .game-button {
+          background-color: #373737;
+          color: #e0e0e0;
+          padding: 10px 0;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 0.85rem;
+          font-weight: 600;
+          width: 100%;
+          margin-top: auto;
+          transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+          text-align: center;
+          letter-spacing: 0.5px;
+      }
+
+      .game-button:hover {
+          background-color: #505050;
+          color: #fff;
+          transform: scale(1.02);
+      }
+
+      /* Modal Styles */
+      .modal {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(10, 10, 10, 0.9);
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+          animation: fadeIn 0.3s ease-out;
+      }
+
+      @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+      }
+
+      .modal-content {
+          background-color: #1a1a1a;
+          width: 90%;
+          height: 90%;
+          max-width: 1400px;
+          max-height: 800px;
+          position: relative;
+          border-radius: 10px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+          overflow: hidden;
+          animation: scaleUp 0.35s cubic-bezier(0.165, 0.840, 0.440, 1.000);
+      }
+
+      @keyframes scaleUp {
+          from { transform: scale(0.95) translateY(10px); opacity: 0; }
+          to { transform: scale(1) translateY(0); opacity: 1; }
+      }
+
+      .modal-content iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+          background-color: #111;
+      }
+
+      .close-btn, .fullscreen-btn {
+          position: absolute;
+          top: 15px;
+          background-color: transparent;
+          color: #aaa;
+          border: none;
+          border-radius: 50%;
+          width: 36px;
+          height: 36px;
+          font-size: 22px;
+          cursor: pointer;
+          transition: color 0.3s ease, transform 0.3s ease;
+          line-height: 36px;
+          text-align: center;
+          z-index: 1001;
+          text-shadow: 0 0 4px rgba(0,0,0,0.7);
+      }
+
+      .close-btn {
+          right: 15px;
+      }
+
+      .fullscreen-btn {
+          right: 60px;
+          font-size: 18px;
+      }
+
+      .close-btn:hover, .fullscreen-btn:hover {
+          color: #fff;
+          transform: scale(1.1);
+      }
+    </style>
+    <style>
+    .collection-card {
+    width: 100%;
+    max-width: 500px;
+    background-color: #2a2a2a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px; /* LOWERED HEIGHT */
+}
+    </style>
+  </head>
+          <script>
+            document.addEventListener('keydown', function(event) {
+              if (event.key === '\\') {
+                window.location.href = './index.html';
+              }
+            });
+	</script>
+<body>
+    <header>
+      <h1>Wheely Collection</h1>
+    </header>
+
+    <div class="container">
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxgvUmh78dTkaQjLTerhyOg5jYeRmA_3Qh8GxpQLp2KxQRR99_sJVufJWz8O0LAtnX8/exec')">
+        <img src="game1.jpg" alt="Wheely 1" />
+        <div class="game-name">Wheely 1</div>
+        <button class="game-button">Play</button>
+      </div>
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzabVHLvUz_JxnHgV6oK_Qle0WzQ75o5584TJJq6sqfuFXM4Sr8dDhR3ptNriKL0nZNLg/exec')">
+        <img src="game2.jpg" alt="Wheely 2" />
+        <div class="game-name">Wheely 2</div>
+        <button class="game-button">Play</button>
+      </div>
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxy-UL5ObleGR5Pvq-1LkNT5gLbj5D8DFNyB2nyxUDPYAAABhPv3rHO8whS-sE4Ed2B/exec')">
+        <img src="game3.jpg" alt="Wheely 3" />
+        <div class="game-name">Wheely 3</div>
+        <button class="game-button">Play</button>
+      </div>
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzGWtiIx2Jv9MbQ81A4zo6lFiarjtS2hgf_o78vxcsbNUHrSGJTs0Etdv9qwhqBJlRa/exec')">
+        <img src="game4.jpg" alt="Wheely 4" />
+        <div class="game-name">Wheely 4</div>
+        <button class="game-button">Play</button>
+      </div>
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxKCN8q6X1GFHOYHSyl9DX5qGtOpZd6aMPnr-lae2IWDP3oqpIk1hvWXwCSPF7mibsS/exec')">
+        <img src="game5.jpg" alt="Wheely 5" />
+        <div class="game-name">Wheely 5</div>
+        <button class="game-button">Play</button>
+      </div>
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyOlPV09llzQo3Kg-npyvsGZkcyIMrysiQ3HT6NK7EnyYhMoB1JErPAmWYz86x53pBh/exec')">
+        <img src="game6.jpg" alt="Wheely 6" />
+        <div class="game-name">Wheely 6</div>
+        <button class="game-button">Play</button>
+      </div>
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxNbE5StrTXDirqJ4lwBgxRjfOoFJi8byUYFX0TqBHXqZ3xRYrE1CFMqLpSVxX9dfQG/exec')">
+        <img src="game7.jpg" alt="Wheely 7" />
+        <div class="game-name">Wheely 7</div>
+        <button class="game-button">Play</button>
+      </div>
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxV4quH8cAQinb2E2G1WG2_etppM5gFoR7nqU00Jwe1EqoaMuo6s-M9G5qqrER8CMVS/exec')">
+        <img src="game8.jpg" alt="Wheely 8" />
+        <div class="game-name">Wheely 8</div>
+        <button class="game-button">Play</button>
+      </div>
+    </div>
+
+    <div class="modal" id="gameModal">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeModal()" title="Close">x</button>
+        <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
+        <iframe id="gameIframe" src="" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    
+    <script>
+      const modal = document.getElementById('gameModal');
+      const iframe = document.getElementById('gameIframe');
+      const fullscreenBtn = document.querySelector('.fullscreen-btn');
+      const backBtn = document.querySelector('.back-btn');
+
+      let previousContent = null;
+
+      function openGame(url) {
+        previousContent = iframe.src;
+        iframe.src = url;
+        fullscreenBtn.style.display = 'block';
+        backBtn.style.display = 'block'; // Always show back button now
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function goBack() {
+        iframe.src = previousContent; // Go back to the previously loaded game
+        if (previousContent === '') {
+          modal.style.display = 'none';
+          document.body.style.overflow = '';
+          fullscreenBtn.style.display = 'none';
+          backBtn.style.display = 'none';
+        }
+      }
+
+      function closeModal() {
+        iframe.src = '';
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+        fullscreenBtn.style.display = 'none';
+        backBtn.style.display = 'none';
+        previousContent = null;
+      }
+
+      function toggleFullscreen() {
+        if (iframe.requestFullscreen) {
+          iframe.requestFullscreen();
+        } else if (iframe.mozRequestFullScreen) {
+          iframe.mozRequestFullScreen();
+        } else if (iframe.webkitRequestFullscreen) {
+          iframe.webkitRequestFullscreen();
+        } else if (iframe.msRequestFullscreen) {
+          iframe.msRequestFullscreen();
+        }
+      }
+
+      modal.addEventListener('click', function(event) {
+        if (event.target === modal) closeModal();
+      });
+
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modal.style.display === 'flex') closeModal();
+      });
+    </script>
+  </body>
+</html>
