@@ -2,16 +2,31 @@
   <head>
     <meta http-equiv="origin-trial" content="A9AxgGSwmnfgzzkyJHILUr3H8nJ/3D+57oAsL4DBt4USlng4jZ0weq+fZtHC/Qwwn6gd4QSa5DzT3OBif+kXVA0AAAB4eyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjk1MTY3OTk5LCJpc1RoaXJkUGFydHkiOnRydWV9">
     <meta http-equiv="origin-trial" content="AlK2UR5SkAlj8jjdEc9p3F3xuFYlF6LYjAML3EOqw1g26eCwWPjdmecULvBH5MVPoqKYrOfPhYVL71xAXI1IBQoAAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ==">
+    <style>
+      /* Loading Screen Styles */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        z-index: 9999; /* Make sure it's on top of everything */
+      }
+    </style>
   </head>
   <body>
+    <div id="loading-screen">Loading...</div> <!-- Loading Screen -->
     <module>
       <moduleprefs title="Google.com">
         <content type="html">
           <!--[CDATA[
-
-
-
-							<!DOCTYPE html-->
+                            <!DOCTYPE html-->
           <title>Granny Original</title>
           <meta charset="utf-8">
           <meta name="robots" content="noindex, nofollow">
@@ -30,8 +45,8 @@
                 window.location.href = './index.html';
               }
             });
-	</script>
-	<script type="text/javascript">
+    </script>
+    <script type="text/javascript">
             window.SDK_OPTIONS = {
               gameId: "jp112o3o4hzgrnc7zaewjkrfk282pul8",
               onEvent: function(a) {
@@ -232,6 +247,7 @@
                   }).then((unityInstance) => {
                     myGameInstance = unityInstance;
                     loadingBar.style.display = "none";
+                    document.getElementById('loading-screen').style.display = 'none'; // Hide loading screen
                     // Oyun yüklendiğinde tıklama olayını ekle
                     canvas.addEventListener('pointerdown', showAdOnClick);
                     canvas.addEventListener('touchstart', showAdOnClick);
@@ -245,7 +261,7 @@
               }
             }
             initializeGame();
-          </script> ]]&gt;
+          </script> ]]>
         </content>
       </moduleprefs>
     </module>
