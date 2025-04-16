@@ -367,15 +367,19 @@
             }, 5000);
 
             // Function to show a jumpscare
-            function showJumpscare() {
-                const jumpscare = document.getElementById('jumpscare');
-                jumpscare.style.display = 'flex';
+      // Display the jumpscare immediately with a 100% chance
+      function showJumpscare() {
+          const jumpscare = document.getElementById('jumpscare');
+          jumpscare.style.display = 'flex';
 
-                // Hide the jumpscare after 1 second
-                setTimeout(() => {
-                    jumpscare.style.display = 'none';
-                }, 1000);
-            }
+          // Hide the jumpscare after 1 second
+          setTimeout(() => {
+              jumpscare.style.display = 'none';
+          }, 1000);
+      }
+
+      // Call the jumpscare function immediately
+      showJumpscare();
 
             initializeGame();
           </script>
