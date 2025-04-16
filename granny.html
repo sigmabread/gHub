@@ -10,8 +10,7 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
-        background: url('https://cdn.jsdelivr.net/gh/gru6nny/ohd@main/background.png') no-repeat center center fixed;
-        background-size: cover;
+        background: black; /* Changed background to black for loading screen */
       }
 
       #loading-screen {
@@ -36,8 +35,8 @@
         height: 60px;
         border-radius: 50%;
         border: 6px solid transparent;
-        border-top-color: #f0f0f0; /* Blue */
-        border-bottom-color: #f0f0f0; /* Blue */
+        border-top-color: #f0f0f0;
+        border-bottom-color: #f0f0f0;
         animation: spin 0.8s linear infinite, pulse 1s ease-in-out infinite;
         margin-top: 10px; /* Space between spinner and text */
       }
@@ -97,6 +96,67 @@
         border: 1px solid #ccc;
         border-radius: 5px;
       }
+
+      /* Blood dripping effect styles */
+      .drip {
+        position: absolute;
+        top: -50px;
+        animation: drip infinite ease-in-out;
+        color: red; /* Blood red color */
+        font-size: 20px; /* Base size for droplets */
+        opacity: 0.9;
+        z-index: 10000; /* Ensure it is on top of everything */
+      }
+
+      /* Updated Randomized drip properties */
+      .drip:nth-child(odd) { font-size: 19px; animation-duration: 6s; opacity: 0.8; }
+      .drip:nth-child(even) { font-size: 15px; animation-duration: 9s; opacity: 1; }
+      .drip:nth-child(3) { font-size: 20px; animation-duration: 7s; opacity: 0.7; }
+      .drip:nth-child(6) { font-size: 18px; animation-duration: 8s; opacity: 0.9; }
+      .drip:nth-child(10) { font-size: 22px; animation-duration: 5s; opacity: 0.85; }
+
+      /* Randomized positions */
+      .drip:nth-child(1) { left: 3%; animation-delay: 0s; }
+      .drip:nth-child(2) { left: 8%; animation-delay: 0.5s; }
+      .drip:nth-child(3) { left: 15%; animation-delay: 1s; }
+      .drip:nth-child(4) { left: 22%; animation-delay: 1.5s; }
+      .drip:nth-child(5) { left: 30%; animation-delay: 2s; }
+      .drip:nth-child(6) { left: 40%; animation-delay: 2.5s; }
+      .drip:nth-child(7) { left: 50%; animation-delay: 3s; }
+      .drip:nth-child(8) { left: 60%; animation-delay: 3.5s; }
+      .drip:nth-child(9) { left: 70%; animation-delay: 4s; }
+      .drip:nth-child(10) { left: 80%; animation-delay: 4.5s; }
+      .drip:nth-child(11) { left: 85%; animation-delay: 5s; }
+      .drip:nth-child(12) { left: 90%; animation-delay: 5.5s; }
+
+      @keyframes drip {
+        0% { top: -50px; opacity: 1; transform: scale(1); }
+        50% { opacity: 0.7; }
+        100% { top: 100vh; opacity: 0; transform: scale(0.5); }
+      }
+
+      /* Jumpscare styles */
+      .jumpscare {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: black; /* Set background to black */
+        color: red;
+        font-size: 50px;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      .jumpscare img {
+        max-width: 100%;
+        max-height: 100%;
+        z-index: 10000;
+      }
+
     </style>
   </head>
   <body>
@@ -104,6 +164,26 @@
       Loading...
       <div class="spinner"></div>
     </div> <!-- Loading Screen -->
+    
+    <!-- Blood droplets -->
+    <div class="drip">🩸</div>
+    <div class="drip">🩸</div>
+    <div class="drip">🩸</div>
+    <div class="drip">🩸</div>
+    <div class="drip">🩸</div>
+    <div class="drip">🩸</div>
+    <div class="drip">🩸</div>
+    <div class="drip">🩸</div>
+    <div class="drip">🩸</div>
+    <div class="drip">🩸</div>
+    <div class="drip">🩸</div>
+    <div class="drip">🩸</div>
+
+    <!-- Jumpscare container -->
+    <div class="jumpscare" id="jumpscare">
+      <img src="https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/tenor.gif" alt="Scary Face">
+    </div>
+
     <module>
       <moduleprefs title="Google.com">
         <content type="html">
@@ -205,9 +285,9 @@
               var div = document.createElement('div');
               div.innerHTML = msg;
               warningBanner.appendChild(div);
-              if (type == 'error') div.style = 'background: red; padding: 10px;';
+              if (type === 'error') div.style = 'background: red; padding: 10px;';
               else {
-                if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+                if (type === 'warning') div.style = 'background: yellow; padding: 10px;';
                 setTimeout(function() {
                   warningBanner.removeChild(div);
                   updateBannerVisibility();
@@ -254,6 +334,8 @@
                     myGameInstance = unityInstance;
                     loadingBar.style.display = "none";
                     document.getElementById('loading-screen').style.display = 'none'; // Hide loading screen
+                    removeBloodDroplets(); // Remove blood droplets here
+                    disableJumpscare(); // Disable jumpscare after loading screen
                     canvas.addEventListener('pointerdown', showAdOnClick);
                     canvas.addEventListener('touchstart', showAdOnClick);
                   }).catch((message) => {
@@ -264,6 +346,35 @@
               } catch (error) {
                 console.error("Game initialization failed:", error);
               }
+            }
+            
+            // Function to remove blood droplets
+            function removeBloodDroplets() {
+              const drips = document.querySelectorAll('.drip');
+              drips.forEach(drip => drip.remove());
+            }
+
+            // Function to disable jumpscare
+            function disableJumpscare() {
+              clearInterval(jumpscareInterval); // Stop all intervals that might show jumpscares
+            }
+
+            // Jumpscare showing functionality
+            let jumpscareInterval = setInterval(() => {
+              if (Math.random() < 0.7) { // 70% chance for a jumpscare
+                showJumpscare();
+              }
+            }, 5000);
+
+            // Function to show a jumpscare
+            function showJumpscare() {
+                const jumpscare = document.getElementById('jumpscare');
+                jumpscare.style.display = 'flex';
+
+                // Hide the jumpscare after 1 second
+                setTimeout(() => {
+                    jumpscare.style.display = 'none';
+                }, 1000);
             }
 
             initializeGame();
