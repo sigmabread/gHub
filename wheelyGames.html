@@ -283,60 +283,51 @@
       </div>
     </div>
     
-    <script>
+<script>
       const modal = document.getElementById('gameModal');
       const iframe = document.getElementById('gameIframe');
       const fullscreenBtn = document.querySelector('.fullscreen-btn');
-      const backBtn = document.querySelector('.back-btn');
-
-      let previousContent = null;
 
       function openGame(url) {
-        previousContent = iframe.src;
+        // Hide fullscreen button for Granny and Granny 2
+        if (url.includes('granny.html') || url.includes('granny2.html')) {
+          fullscreenBtn.style.display = 'none';
+        } else {
+          fullscreenBtn.style.display = 'block';
+        }
         iframe.src = url;
-        fullscreenBtn.style.display = 'block';
-        backBtn.style.display = 'block'; // Always show back button now
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
-      }
-
-      function goBack() {
-        iframe.src = previousContent; // Go back to the previously loaded game
-        if (previousContent === '') {
-          modal.style.display = 'none';
-          document.body.style.overflow = '';
-          fullscreenBtn.style.display = 'none';
-          backBtn.style.display = 'none';
-        }
       }
 
       function closeModal() {
         iframe.src = '';
         modal.style.display = 'none';
         document.body.style.overflow = '';
-        fullscreenBtn.style.display = 'none';
-        backBtn.style.display = 'none';
-        previousContent = null;
       }
 
       function toggleFullscreen() {
         if (iframe.requestFullscreen) {
           iframe.requestFullscreen();
-        } else if (iframe.mozRequestFullScreen) {
+        } else if (iframe.mozRequestFullScreen) { // Firefox
           iframe.mozRequestFullScreen();
-        } else if (iframe.webkitRequestFullscreen) {
+        } else if (iframe.webkitRequestFullscreen) { // Chrome, Safari, Opera
           iframe.webkitRequestFullscreen();
-        } else if (iframe.msRequestFullscreen) {
+        } else if (iframe.msRequestFullscreen) { // IE/Edge
           iframe.msRequestFullscreen();
         }
       }
 
       modal.addEventListener('click', function(event) {
-        if (event.target === modal) closeModal();
+        if (event.target === modal) {
+          closeModal();
+        }
       });
 
       document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && modal.style.display === 'flex') closeModal();
+        if (event.key === 'Escape' && modal.style.display === 'flex') {
+          closeModal();
+        }
       });
     </script>
   </body>
