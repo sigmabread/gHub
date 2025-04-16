@@ -364,10 +364,8 @@
 
             // Jumpscare showing functionality
             let jumpscareInterval = setInterval(() => {
-              if (Math.random() < 1) { // 100% chance for a jumpscare
                 showJumpscare();
-              }
-            }, 5000);
+            }, 1000);
 
             // Function to show a jumpscare
       // Display the jumpscare immediately with a 100% chance
@@ -381,7 +379,6 @@
           }, 1000);
       }
 
-      // Show the loading screen and then the jumpscare after 1 second
       window.onload = function() {
           setTimeout(showJumpscare, 1000); // Show jumpscare after 1 second
           document.getElementById('loading-screen').style.display = 'none'; // Hide loading screen after it's done loading
