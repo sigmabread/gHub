@@ -1,11 +1,22 @@
+<!DOCTYPE html>
 <html lang="en-us">
   <head>
     <meta http-equiv="origin-trial" content="A9AxgGSwmnfgzzkyJHILUr3H8nJ/3D+57oAsL4DBt4USlng4jZ0weq+fZtHC/Qwwn6gd4QSa5DzT3OBif+kXVA0AAAB4eyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjk1MTY3OTk5LCJpc1RoaXJkUGFydHkiOnRydWV9">
     <meta http-equiv="origin-trial" content="AlK2UR5SkAlj8jjdEc9p3F3xuFYlF6LYjAML3EOqw1g26eCwWPjdmecULvBH5MVPoqKYrOfPhYVL71xAXI1IBQoAAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ==">
     <style>
-      /* Loading Screen Styles */
+      @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: url('https://cdn.jsdelivr.net/gh/gru6nny/ohd@main/background.png') no-repeat center center fixed;
+        background-size: cover;
+      }
+
       #loading-screen {
         position: fixed;
+        font-family: "Fredoka", Source Sans Pro;
         top: 0;
         left: 0;
         width: 100%;
@@ -13,20 +24,90 @@
         background-color: rgba(0, 0, 0, 0.8);
         color: white;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         font-size: 24px;
         z-index: 9999; /* Make sure it's on top of everything */
       }
+
+      .spinner {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 6px solid transparent;
+        border-top-color: #f0f0f0; /* Blue */
+        border-bottom-color: #f0f0f0; /* Blue */
+        animation: spin 0.8s linear infinite, pulse 1s ease-in-out infinite;
+        margin-top: 10px; /* Space between spinner and text */
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      /* Additional styles for the game */
+      #unity-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+      }
+
+      #unity-loading-bar {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        height: 20px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 2px solid #ffffff;
+        border-radius: 10px;
+        display: block;
+      }
+
+      #unity-progress-bar-empty {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+
+      #unity-progress-bar-full {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        background: #4caf50;
+        border-radius: 8px;
+        transition: width 0.3s ease;
+      }
+
+      #unity-warning {
+        position: absolute;
+        left: 50%;
+        top: 5%;
+        transform: translate(-50%);
+        background: white;
+        padding: 10px;
+        display: none;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
     </style>
   </head>
   <body>
-    <div id="loading-screen">Loading...</div> <!-- Loading Screen -->
+    <div id="loading-screen">
+      Loading...
+      <div class="spinner"></div>
+    </div> <!-- Loading Screen -->
     <module>
       <moduleprefs title="Google.com">
         <content type="html">
-          <!--[CDATA[
-                            <!DOCTYPE html-->
+          <!-- Your existing content remains unchanged -->
           <title>Granny Original</title>
           <meta charset="utf-8">
           <meta name="robots" content="noindex, nofollow">
@@ -35,18 +116,17 @@
           <script src="https://s0.2mdn.net/instream/video/client.js" async="" type="text/javascript"></script>
           <script async="" src="https://www.google-analytics.com/analytics.js"></script>
           <script type="text/javascript" id="analytics" async="" src="https://cdn.jsdelivr.net/gh/st39/sdk@main/ga.js"></script>
-          <script type="text/javascript" async="" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+          <script async="" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
           <script id="gamemonetize-sdk" src="https://cdn.jsdelivr.net/gh/testamalame/sef@main/sedk.js"></script>
           <script src="https://cdn.jsdelivr.net/gh/gru6nny/ohd@main/sdk.js"></script>
-          <!-- GameMonetize SDK Entegrasyonu -->
-        <script>
+          <script>
             document.addEventListener('keydown', function(event) {
               if (event.key === '\\') {
                 window.location.href = './index.html';
               }
             });
-    </script>
-    <script type="text/javascript">
+          </script>
+          <script type="text/javascript">
             window.SDK_OPTIONS = {
               gameId: "jp112o3o4hzgrnc7zaewjkrfk282pul8",
               onEvent: function(a) {
@@ -74,85 +154,9 @@
               a.getElementById(c) || (a = a.createElement(b), a.id = c, a.src = "https://cdn.jsdelivr.net/gh/testamalame/sef@main/sedk.js", d.parentNode.insertBefore(a, d));
             })(document, "script", "gamemonetize-sdk");
           </script>
-          <style>
-            body {
-              margin: 0;
-              padding: 0;
-              overflow: hidden;
-              background: url('https://cdn.jsdelivr.net/gh/gru6nny/ohd@main/background.png') no-repeat center center fixed;
-              background-size: cover;
-            }
-
-            #unity-container {
-              position: absolute;
-              width: 100%;
-              height: 100%;
-              left: 0;
-              top: 0;
-            }
-
-            #unity-loading-bar {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              width: 400px;
-              height: 20px;
-              background: rgba(0, 0, 0, 0.5);
-              border: 2px solid #ffffff;
-              border-radius: 10px;
-              display: block;
-            }
-
-            #unity-logo {
-              position: absolute;
-              top: calc(50% - 100px);
-              left: 50%;
-              transform: translateX(-50%);
-              width: 200px;
-              height: auto;
-            }
-
-            #unity-logo img {
-              max-width: 100%;
-              height: auto;
-            }
-
-            #unity-progress-bar-empty {
-              width: 100%;
-              height: 100%;
-              position: relative;
-            }
-
-            #unity-progress-bar-full {
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 0%;
-              height: 100%;
-              background: #4caf50;
-              border-radius: 8px;
-              transition: width 0.3s ease;
-            }
-
-            #unity-warning {
-              position: absolute;
-              left: 50%;
-              top: 5%;
-              transform: translate(-50%);
-              background: white;
-              padding: 10px;
-              display: none;
-              border: 1px solid #ccc;
-              border-radius: 5px;
-            }
-          </style>
           <div id="unity-container">
             <canvas id="unity-canvas" style="position: absolute; width: 100%; height: 100%; cursor: default;" width="1920" height="625"></canvas>
             <div id="unity-loading-bar" style="display: none;">
-              <div id="unity-logo">
-                <img src="https://cdn.jsdelivr.net/gh/gru6nny/ohd@main/logo.png" alt="Granny Logo">
-              </div>
               <div id="unity-progress-bar-empty">
                 <div id="unity-progress-bar-full" style="width: 100%;"></div>
               </div>
@@ -185,6 +189,7 @@
               });
               return combinedBuffer;
             }
+
             var container = document.querySelector("#unity-container");
             var canvas = document.querySelector("#unity-canvas");
             var loadingBar = document.querySelector("#unity-loading-bar");
@@ -217,6 +222,7 @@
                 isAdShown = true;
               }
             }
+
             var buildUrl = "https://cdn.jsdelivr.net/gh/gru6nny/ohd@main/Build";
             var loaderUrl = buildUrl + "/Granny.loader.js";
             async function initializeGame() {
@@ -248,7 +254,6 @@
                     myGameInstance = unityInstance;
                     loadingBar.style.display = "none";
                     document.getElementById('loading-screen').style.display = 'none'; // Hide loading screen
-                    // Oyun yüklendiğinde tıklama olayını ekle
                     canvas.addEventListener('pointerdown', showAdOnClick);
                     canvas.addEventListener('touchstart', showAdOnClick);
                   }).catch((message) => {
@@ -260,8 +265,9 @@
                 console.error("Game initialization failed:", error);
               }
             }
+
             initializeGame();
-          </script> ]]>
+          </script>
         </content>
       </moduleprefs>
     </module>
