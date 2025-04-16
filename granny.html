@@ -96,45 +96,7 @@
         border: 1px solid #ccc;
         border-radius: 5px;
       }
-
-      /* Blood dripping effect styles */
-      .drip {
-        position: absolute;
-        top: -50px;
-        animation: drip infinite ease-in-out;
-        color: red; /* Blood red color */
-        font-size: 20px; /* Base size for droplets */
-        opacity: 0.9;
-        z-index: 9998; /* Ensure it is on top of everything */
-      }
-
-      /* Updated Randomized drip properties */
-      .drip:nth-child(odd) { font-size: 19px; animation-duration: 6s; opacity: 0.8; }
-      .drip:nth-child(even) { font-size: 15px; animation-duration: 9s; opacity: 1; }
-      .drip:nth-child(3) { font-size: 20px; animation-duration: 7s; opacity: 0.7; }
-      .drip:nth-child(6) { font-size: 18px; animation-duration: 8s; opacity: 0.9; }
-      .drip:nth-child(10) { font-size: 22px; animation-duration: 5s; opacity: 0.85; }
-
-      /* Randomized positions */
-      .drip:nth-child(1) { left: 3%; animation-delay: 0s; }
-      .drip:nth-child(2) { left: 8%; animation-delay: 0.5s; }
-      .drip:nth-child(3) { left: 15%; animation-delay: 1s; }
-      .drip:nth-child(4) { left: 22%; animation-delay: 1.5s; }
-      .drip:nth-child(5) { left: 30%; animation-delay: 2s; }
-      .drip:nth-child(6) { left: 40%; animation-delay: 2.5s; }
-      .drip:nth-child(7) { left: 50%; animation-delay: 3s; }
-      .drip:nth-child(8) { left: 60%; animation-delay: 3.5s; }
-      .drip:nth-child(9) { left: 70%; animation-delay: 4s; }
-      .drip:nth-child(10) { left: 80%; animation-delay: 4.5s; }
-      .drip:nth-child(11) { left: 85%; animation-delay: 5s; }
-      .drip:nth-child(12) { left: 90%; animation-delay: 5.5s; }
-
-      @keyframes drip {
-        0% { top: -50px; opacity: 1; transform: scale(1); }
-        50% { opacity: 0.7; }
-        100% { top: 100vh; opacity: 0; transform: scale(0.5); }
-      }
-
+      
       /* Jumpscare styles */
       .jumpscare {
         display: none;
@@ -169,22 +131,8 @@
     <div id="loading-screen">
       Loading...
       <div class="spinner"></div>
-    </div> <!-- Loading Screen -->
+    </div> 
     
-    <!-- Blood droplets -->
-    <div class="drip">🩸</div>
-    <div class="drip">🩸</div>
-    <div class="drip">🩸</div>
-    <div class="drip">🩸</div>
-    <div class="drip">🩸</div>
-    <div class="drip">🩸</div>
-    <div class="drip">🩸</div>
-    <div class="drip">🩸</div>
-    <div class="drip">🩸</div>
-    <div class="drip">🩸</div>
-    <div class="drip">🩸</div>
-    <div class="drip">🩸</div>
-
     <!-- Jumpscare container -->
     <div class="jumpscare" id="jumpscare">
       <img src="https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/tenor.gif" alt="Scary Face">
