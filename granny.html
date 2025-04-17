@@ -319,18 +319,20 @@
             }, 1000);
 
             // Function to show a jumpscare
-      // Display the jumpscare immediately with a 100% chance
-      function showJumpscare() {
-        audio = new audio
-        audio = "https://github.com/piwakawaka1337/jumpscare-sound/blob/master/jumpscare.mp3"
-        audio.Play
-          const jumpscare = document.getElementById('jumpscare');
-          jumpscare.style.display = 'flex';
+// Display the jumpscare immediately with a 100% chance
+        function showJumpscare() {
+            const audio = new Audio("https://github.com/piwakawaka1337/jumpscare-sound/blob/master/jumpscare.mp3");
+            audio.play();
 
-          // Hide the jumpscare after 1 second
-          setTimeout(() => {
-              jumpscare.style.display = 'none';
-          }, 1000);
+            const jumpscare = document.getElementById('jumpscare');
+            jumpscare.style.display = 'flex';
+
+    // Hide the jumpscare after 1 second
+        setTimeout(() => {
+          jumpscare.style.display = 'none';
+        }, 1000);
+    }
+       1000);
       }
 
       window.onload = function() {
