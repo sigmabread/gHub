@@ -10,7 +10,8 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
-        background: black; /* Changed background to black for loading screen */
+        background: black;
+        /* Changed background to black for loading screen */
       }
 
       #loading-screen {
@@ -27,7 +28,8 @@
         justify-content: center;
         align-items: center;
         font-size: 24px;
-        z-index: 9997; /* Make sure it's on top of everything */
+        z-index: 9997;
+        /* Make sure it's on top of everything */
       }
 
       .spinner {
@@ -38,12 +40,18 @@
         border-top-color: #f0f0f0;
         border-bottom-color: #f0f0f0;
         animation: spin 0.8s linear infinite, pulse 1s ease-in-out infinite;
-        margin-top: 10px; /* Space between spinner and text */
+        margin-top: 10px;
+        /* Space between spinner and text */
       }
 
       @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
       }
 
       /* Additional styles for the game */
@@ -96,7 +104,7 @@
         border: 1px solid #ccc;
         border-radius: 5px;
       }
-      
+
       /* Jumpscare styles */
       .jumpscare {
         display: none;
@@ -105,7 +113,8 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: black; /* Optional for extra effect */
+        background-color: black;
+        /* Optional for extra effect */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -124,20 +133,15 @@
         background-size: cover;
         z-index: 9999;
       }
-
     </style>
   </head>
   <body>
-    <div id="loading-screen">
-      Loading...
-      <div class="spinner"></div>
-    </div> 
-    
+    <div id="loading-screen"> Loading... <div class="spinner"></div>
+    </div>
     <!-- Jumpscare container -->
     <div class="jumpscare" id="jumpscare">
       <img src="https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/tenor.gif" alt="Scary Face">
     </div>
-
     <module>
       <moduleprefs title="Google.com">
         <content type="html">
@@ -223,7 +227,6 @@
               });
               return combinedBuffer;
             }
-
             var container = document.querySelector("#unity-container");
             var canvas = document.querySelector("#unity-canvas");
             var loadingBar = document.querySelector("#unity-loading-bar");
@@ -256,7 +259,6 @@
                 isAdShown = true;
               }
             }
-
             var buildUrl = "https://cdn.jsdelivr.net/gh/gru6nny/ohd@main/Build";
             var loaderUrl = buildUrl + "/Granny.loader.js";
             async function initializeGame() {
@@ -287,9 +289,9 @@
                   }).then((unityInstance) => {
                     myGameInstance = unityInstance;
                     loadingBar.style.display = "none";
-                    document.getElementById('loading-screen').style.display = 'none'; // Hide loading screen
-                    removeBloodDroplets(); // Remove blood droplets here
-                    disableJumpscare(); // Disable jumpscare after loading screen
+                    document.getElementById('loading-screen').style.display = 'none';
+                    removeBloodDroplets();
+                    disableJumpscare();
                     canvas.addEventListener('pointerdown', showAdOnClick);
                     canvas.addEventListener('touchstart', showAdOnClick);
                   }).catch((message) => {
@@ -301,45 +303,35 @@
                 console.error("Game initialization failed:", error);
               }
             }
-            
-            // Function to remove blood droplets
+
             function removeBloodDroplets() {
               const drips = document.querySelectorAll('.drip');
               drips.forEach(drip => drip.remove());
             }
-
-            // Function to disable jumpscare
+            
             function disableJumpscare() {
-              clearInterval(jumpscareInterval); // Stop all intervals that might show jumpscares
+              clearInterval(jumpscareInterval);
             }
-
-            // Jumpscare showing functionality
+            
             let jumpscareInterval = setInterval(() => {
-                showJumpscare();
+              showJumpscare();
             }, 1000);
-
-            // Function to show a jumpscare
-// Display the jumpscare immediately with a 100% chance
-        function showJumpscare() {
-            const audio = new Audio("https://github.com/piwakawaka1337/jumpscare-sound/blob/master/jumpscare.mp3");
-            audio.play();
-
-            const jumpscare = document.getElementById('jumpscare');
-            jumpscare.style.display = 'flex';
-
-    // Hide the jumpscare after 1 second
-        setTimeout(() => {
-          jumpscare.style.display = 'none';
-        }, 1000);
-    }
-       1000);
-      }
-
-      window.onload = function() {
-          setTimeout(showJumpscare, 1000); // Show jumpscare after 1 second
-          document.getElementById('loading-screen').style.display = 'none'; // Hide loading screen after it's done loading
-      };
-
+            
+            function showJumpscare() {
+              const audio = new Audio("https://github.com/piwakawaka1337/jumpscare-sound/blob/master/jumpscare.mp3");
+              audio.play();
+              const jumpscare = document.getElementById('jumpscare');
+              jumpscare.style.display = 'flex';
+              
+              setTimeout(() => {
+                jumpscare.style.visibility = 'hidden';
+                audio.pause();
+                audio.currentTime = 0;
+              }, 1000);
+            }
+            window.onload = function() {
+              setTimeout(showJumpscare, 1000, disableJumpscare);
+            };
             initializeGame();
           </script>
         </content>
