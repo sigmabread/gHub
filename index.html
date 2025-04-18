@@ -363,7 +363,7 @@
     </div>
 
     <div class="toggle-container">
-      <label for="granny-toggle" id="toggle-label">enable jumpscare</label>
+      <label for="granny-toggle" id="toggle-label">disable jumpscare</label>
       <input type="checkbox" id="granny-toggle" />
     </div>
     
@@ -392,7 +392,7 @@
         });
 
         function updateToggleLabel(isChecked) {
-            toggleLabel.textContent = isChecked ? 'disable jumpscare' : 'enable jumpscare';
+            toggleLabel.textContent = isChecked ? 'enable jumpscare' : 'disable jumpscare';
         }
         
         function openGranny(url) {
