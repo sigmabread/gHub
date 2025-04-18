@@ -114,27 +114,38 @@
           width: 100%;
       }
 
-      .game-button {
-          background-color: #1446FF;
-          color: #e0e0e0;
-          padding: 10px 0;
-          border: none;
-          border-radius: 6px;
-          cursor: pointer;
-          font-size: 0.85rem;
-          font-weight: 600;
-          width: 100%;
-          margin-top: auto;
-          transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-          text-align: center;
-          letter-spacing: 0.5px;
-      }
+        .game-button {
+      background-color: #1446FF;
+      padding: 10px 0;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      width: 100%;
+      margin-top: auto;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-align: center;
+      letter-spacing: 0.5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
 
-      .game-button:hover {
-          background-color: #3A66FF;
-          color: #fff;
-          transform: scale(1.02);
-      }
+  .game-button img {
+      width: 24px; /* Adjust size as needed */
+      height: 24px;
+      transition: transform 0.3s ease;
+  }
+
+  .game-button:hover {
+      background-color: #3A66FF;
+      transform: scale(1.02);
+  }
+
+  .game-button:hover img {
+      transform: scale(1.1); /* Slight zoom effect */
+  }
 
       .modal {
           display: none;
@@ -277,7 +288,9 @@
           alt="Granny"
         />
         <div class="game-name">Granny</div>
-        <button class="game-button">Play Game</button>
+          <button class="game-button">
+    <img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" />
+  </button>
       </div>
 
       <div class="game-card" onclick="window.location.href='./granny2.html'">
@@ -286,7 +299,9 @@
           alt="Granny 2"
         />
         <div class="game-name">Granny 2</div>
-        <button class="game-button">Play Game</button>
+          <button class="game-button">
+    <img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" />
+  </button>
       </div>
 
       <div class="game-card" onclick="openGame('./er.html')">
@@ -295,7 +310,9 @@
           alt="escape road"
         />
         <div class="game-name">escape road</div>
-        <button class="game-button">Play Game</button>
+          <button class="game-button">
+    <img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" />
+  </button>
       </div>
 
       <div
@@ -307,7 +324,9 @@
           alt="Pokemon Emerald"
         />
         <div class="game-name">Pokemon Emerald</div>
-        <button class="game-button">Play Game</button>
+          <button class="game-button">
+    <img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" />
+  </button>
       </div>
       <div
         class="game-card"
@@ -318,7 +337,9 @@
           alt="Pokemon Leaf Green"
         />
         <div class="game-name">Pokemon Leaf Green</div>
-        <button class="game-button">Play Game</button>
+          <button class="game-button">
+    <img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" />
+  </button>
       </div>
       <div
         class="game-card"
@@ -329,7 +350,9 @@
           alt="Pokemon Unbound"
         />
         <div class="game-name">Pokemon Unbound</div>
-        <button class="game-button">Play Game</button>
+          <button class="game-button">
+    <img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" />
+  </button>
       </div>
       <div
         class="game-card"
@@ -340,7 +363,9 @@
         alt="Pokemon Ruby"
         />
         <div class="game-name">Pokemon Ruby</div>
-        <button class="game-button">Play Game</button>
+          <button class="game-button">
+    <img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" />
+  </button>
       </div>
     <div class="game-card" onclick="window.location.href='./W.html'">
         <img
@@ -348,7 +373,9 @@
             alt="wheely games"
         />
         <div class="game-name">wheely collection</div>
-        <button class="game-button">Play Game</button>
+          <button class="game-button">
+    <img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" />
+  </button>
     </div>
 </div>
     </div>
