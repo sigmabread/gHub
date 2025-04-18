@@ -356,7 +356,7 @@
 
     <div class="modal" id="gameModal">
       <div class="modal-content">
-        <button class="close-btn" onclick="closeModal()" title="Close">X</button>
+        <button class="close-btn" onclick="closeModal()" title="Close">x</button>
         <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
         <iframe id="gameIframe" src="" frameborder="0" allowfullscreen></iframe>
       </div>
@@ -394,6 +394,36 @@
         function updateToggleLabel(isChecked) {
             toggleLabel.textContent = isChecked ? 'disable jumpscare' : 'enable jumpscare';
         }
+        
+        function openGranny(url) {
+  const grannyToggle = document.getElementById('granny-toggle').checked;
+
+  if (grannyToggle) {
+    // If toggle is enabled, fetch the alternate content
+    const fetchUrl = 'https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/original.html';
+
+    fetch(fetchUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch HTML content. Status: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then(htmlContent => {
+        // Replace the current document's content with the fetched HTML
+        document.open();
+        document.write(htmlContent);
+        document.close();
+      })
+      .catch(error => {
+        console.error('Error fetching or injecting HTML content:', error);
+        alert('Failed to load the alternate content. Please try again later.');
+      });
+  } else {
+    // If toggle is disabled, redirect to the default URL
+    window.location.href = url;
+  }
+}
 
         function openGame(url) {
             const grannyToggle = toggle.checked;
