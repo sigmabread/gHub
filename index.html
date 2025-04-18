@@ -218,6 +218,58 @@
           color: #fff;
           transform: scale(1.1);
       }
+
+      /* Toggle Switch */
+      .toggle-container {
+          position: fixed;
+          bottom: 20px;
+          left: 20px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          background-color: #1a1a1a;
+          padding: 10px 15px;
+          border-radius: 20px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      }
+
+      .toggle-container label {
+          color: #e0e0e0;
+          font-size: 1rem;
+          font-weight: 500;
+      }
+
+      .toggle-container input[type="checkbox"] {
+          width: 40px;
+          height: 20px;
+          appearance: none;
+          background: #373737;
+          border-radius: 20px;
+          position: relative;
+          outline: none;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+      }
+
+      .toggle-container input[type="checkbox"]:checked {
+          background: #4caf50;
+      }
+
+      .toggle-container input[type="checkbox"]::before {
+          content: '';
+          position: absolute;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: #fff;
+          top: 1px;
+          left: 1px;
+          transition: transform 0.3s ease;
+      }
+
+      .toggle-container input[type="checkbox"]:checked::before {
+          transform: translateX(20px);
+      }
     </style>
   </head>
   <body>
@@ -317,12 +369,22 @@
       </div>
     </div>
 
+    <div class="toggle-container">
+      <label for="granny-toggle">Enable Alternate URL</label>
+      <input type="checkbox" id="granny-toggle" />
+    </div>
+
     <script>
       const modal = document.getElementById('gameModal');
       const iframe = document.getElementById('gameIframe');
       const fullscreenBtn = document.querySelector('.fullscreen-btn');
 
       function openGame(url) {
+        const grannyToggle = document.getElementById('granny-toggle').checked;
+        if (grannyToggle && url.includes('granny.html')) {
+          url = 'https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/original.html';
+        }
+
         // Hide fullscreen button for Granny and Granny 2
         if (url.includes('granny.html') || url.includes('granny2.html')) {
           fullscreenBtn.style.display = 'none';
