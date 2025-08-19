@@ -10,271 +10,262 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <style>
-      * {
-          box-sizing: border-box;
-          margin: 0;
-          padding: 0;
-      }
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-      html {
-          height: 100%;
-      }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease;
+  }
 
-      body {
-          font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          min-height: 100%;
-          background-color: #0a0a0a;
-          color: #e0e0e0;
-          overflow-y: auto;
-          line-height: 1.6;
-      }
+  html, body {
+    height: 100%;
+    font-family: 'Inter', 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0a0a0a;
+    color: #e0e0e0;
+    line-height: 1.6;
+    overflow-y: auto;
+  }
 
-      ::-webkit-scrollbar {
-          width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-          background: #1a1a1a;
-      }
-      ::-webkit-scrollbar-thumb {
-          background-color: #333;
-          border-radius: 10px;
-          border: 2px solid #1a1a1a;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-          background-color: #444;
-      }
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #1a1a1a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #333;
+    border-radius: 10px;
+    border: 2px solid #1a1a1a;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #444;
+  }
 
-      header {
-          text-align: center;
-          padding: 50px 20px 30px 20px;
-      }
+  header {
+    text-align: center;
+    padding: 50px 20px 30px;
+  }
 
-      header h1 {
-          font-size: 2.8em;
-          font-weight: 600;
-          color: #f0f0f0;
-          letter-spacing: 1px;
-      }
+  header h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    color: #f0f0f0;
+    letter-spacing: 1px;
+  }
 
-      .container {
-          display: grid;
-          justify-content: center;
-          grid-template-columns: repeat(auto-fit, 190px);
-          gap: 35px;
-          max-width: 1300px;
-          width: 100%;
-          padding: 20px 40px 60px 40px;
-          margin: 0 auto;
-      }
+  .container {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 35px;
+    max-width: 1300px;
+    padding: 20px 40px 60px;
+    margin: 0 auto;
+  }
 
-      .game-card {
-          width: 190px;
-          background-color: #181A1B;
-          border-radius: 10px;
-          padding: 15px;
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-          transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-          cursor: pointer;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 15px;
-          text-align: center;
-          overflow: hidden;
-      }
+  .game-card {
+    background: rgba(24, 26, 27, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+    overflow: hidden;
+  }
 
-      .game-card:hover {
-          transform: translateY(-5px);
-          background-color: #2A2D30;
-          border-color: rgba(255, 255, 255, 0.12);
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-      }
+  .game-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    background-color: rgba(42, 45, 48, 0.7);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+  }
 
-      .game-card img {
-          width: 100%;
-          height: 140px;
-          border-radius: 6px;
-          object-fit: cover;
-          display: block;
-      }
+  .game-card img {
+    width: 100%;
+    height: 140px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
 
-      .game-name {
-          font-size: 1rem;
-          font-weight: 500;
-          line-height: 1.4;
-          flex-grow: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 40px;
-          color: #f0f0f0;
-          padding: 0 5px;
-          width: 100%;
-      }
+  .game-name {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    font-weight: 500;
+    color: #f0f0f0;
+    padding: 0 5px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
 
-        .game-button {
-      background-color: #1446FF;
-      padding: 10px 0;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 600;
-      width: 100%;
-      margin-top: auto;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      text-align: center;
-      letter-spacing: 0.5px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  .game-button {
+    background: linear-gradient(135deg, #1446FF, #3A66FF);
+    padding: 10px 0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    width: 100%;
+    margin-top: auto;
+    letter-spacing: 0.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(58, 102, 255, 0.3);
   }
 
   .game-button img {
-      width: 24px; /* Adjust size as needed */
-      height: 24px;
-      transition: transform 0.3s ease;
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
   }
 
   .game-button:hover {
-      background-color: #3A66FF;
-      transform: scale(1.02);
+    background-color: #3A66FF;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(58, 102, 255, 0.4);
   }
 
   .game-button:hover img {
-      transform: scale(1.1); /* Slight zoom effect */
+    transform: scale(1.1);
   }
 
-      .modal {
-          display: none;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(10, 10, 10, 0.9);
-          justify-content: center;
-          align-items: center;
-          z-index: 1000;
-          animation: fadeIn 0.3s ease-out;
-      }
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(10, 10, 10, 0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+  }
 
-      @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-      }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 
-      .modal-content {
-          background-color: #1a1a1a;
-          width: 90%;
-          height: 90%;
-          max-width: 1400px;
-          max-height: 800px;
-          position: relative;
-          border-radius: 10px;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-          overflow: hidden;
-          animation: scaleUp 0.35s cubic-bezier(0.165, 0.840, 0.440, 1.000);
-      }
+  .modal-content {
+    background: rgba(26, 26, 26, 0.7);
+    backdrop-filter: blur(12px);
+    width: 90%; height: 90%;
+    max-width: 1400px; max-height: 800px;
+    position: relative;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    animation: scaleUp 0.35s cubic-bezier(0.165, 0.840, 0.440, 1.000);
+  }
 
-      @keyframes scaleUp {
-          from { transform: scale(0.95) translateY(10px); opacity: 0; }
-          to { transform: scale(1) translateY(0); opacity: 1; }
-      }
+  @keyframes scaleUp {
+    from { transform: scale(0.95) translateY(10px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
 
-      .modal-content iframe {
-          width: 100%;
-          height: 100%;
-          border: none;
-          background-color: #111;
-      }
+  .modal-content iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: #111;
+  }
 
-      .close-btn, .fullscreen-btn {
-          position: absolute;
-          top: 15px;
-          background-color: transparent;
-          color: #aaa;
-          border: none;
-          border-radius: 50%;
-          width: 36px;
-          height: 36px;
-          font-size: 22px;
-          cursor: pointer;
-          transition: color 0.3s ease, transform 0.3s ease;
-          line-height: 36px;
-          text-align: center;
-          z-index: 1001;
-          text-shadow: 0 0 4px rgba(0,0,0,0.7);
-      }
+  .close-btn, .fullscreen-btn {
+    position: absolute;
+    top: 15px;
+    background-color: transparent;
+    color: #aaa;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+    cursor: pointer;
+    line-height: 36px;
+    text-align: center;
+    z-index: 1001;
+    text-shadow: 0 0 4px rgba(0,0,0,0.7);
+  }
 
-      .close-btn {
-          right: 15px;
-      }
+  .close-btn {
+    right: 15px;
+  }
 
-      .fullscreen-btn {
-          right: 60px;
-          font-size: 18px;
-      }
+  .fullscreen-btn {
+    right: 60px;
+    font-size: 18px;
+  }
 
-      .close-btn:hover, .fullscreen-btn:hover {
-          color: #fff;
-          transform: scale(1.1);
-      }
+  .close-btn:hover, .fullscreen-btn:hover {
+    color: #fff;
+    transform: scale(1.1);
+  }
 
-      .toggle-container {
-          position: fixed;
-          bottom: 20px;
-          left: 20px;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          background-color: #1a1a1a;
-          padding: 10px 15px;
-          border-radius: 20px;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-      }
+  .toggle-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 10px 15px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
 
-      .toggle-container label {
-          color: #e0e0e0;
-          font-size: 1rem;
-          font-weight: 500;
-      }
+  .toggle-container label {
+    color: #e0e0e0;
+    font-size: 1rem;
+    font-weight: 500;
+  }
 
-      .toggle-container input[type="checkbox"] {
-          width: 40px;
-          height: 20px;
-          appearance: none;
-          background: #2A2D30;
-          border-radius: 20px;
-          position: relative;
-          outline: none;
-          cursor: pointer;
-          transition: background-color 0.3s ease;
-      }
+  .toggle-container input[type="checkbox"] {
+    width: 40px;
+    height: 20px;
+    appearance: none;
+    background: #2A2D30;
+    border-radius: 20px;
+    position: relative;
+    outline: none;
+    cursor: pointer;
+  }
 
-      .toggle-container input[type="checkbox"]:checked {
-          background: #1449FF;
-      }
+  .toggle-container input[type="checkbox"]:checked {
+    background: #1449FF;
+  }
 
-      .toggle-container input[type="checkbox"]::before {
-          content: '';
-          position: absolute;
-          width: 18px;
-          height: 18px;
-          border-radius: 50%;
-          background: #fff;
-          top: 1px;
-          left: 1px;
-          transition: transform 0.3s ease;
-      }
+  .toggle-container input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    top: 1px;
+    left: 1px;
+    transition: transform 0.3s ease;
+  }
 
-      .toggle-container input[type="checkbox"]:checked::before {
-          transform: translateX(20px);
-      }
-    </style>
+  .toggle-container input[type="checkbox"]:checked::before {
+    transform: translateX(20px);
+  }
+</style>
   </head>
   <body>
     <header>
