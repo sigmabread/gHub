@@ -59,15 +59,25 @@
             });
           </script>
 <script>
-          document.addEventListener('keydown', (event) => {
+document.addEventListener('keydown', (event) => {
   if (event.key === 'p') {
-    // Simulate 'c' key press
-    const cKeyEvent = new KeyboardEvent('keydown', { key: 'c', code: 'KeyC', bubbles: true });
+    // Fire 'c' key event immediately
+    const cKeyEvent = new KeyboardEvent('keydown', {
+      key: 'c',
+      code: 'KeyC',
+      bubbles: true
+    });
     document.dispatchEvent(cKeyEvent);
 
-    // Simulate 'r' key press
-    const rKeyEvent = new KeyboardEvent('keydown', { key: 'r', code: 'KeyR', bubbles: true });
-    document.dispatchEvent(rKeyEvent);
+    // Fire 'r' key event on the next animation frame
+    requestAnimationFrame(() => {
+      const rKeyEvent = new KeyboardEvent('keydown', {
+        key: 'r',
+        code: 'KeyR',
+        bubbles: true
+      });
+      document.dispatchEvent(rKeyEvent);
+    });
   }
 });
 </script>
