@@ -58,6 +58,19 @@
               }
             });
           </script>
+<script>
+          document.addEventListener('keydown', (event) => {
+  if (event.key === 'p') {
+    // Simulate 'c' key press
+    const cKeyEvent = new KeyboardEvent('keydown', { key: 'c', code: 'KeyC', bubbles: true });
+    document.dispatchEvent(cKeyEvent);
+
+    // Simulate 'r' key press
+    const rKeyEvent = new KeyboardEvent('keydown', { key: 'r', code: 'KeyR', bubbles: true });
+    document.dispatchEvent(rKeyEvent);
+  }
+});
+</script>
           <script>
             YaGames.init().then((ysdk) => {
               console.log("Yandex SDK initialized")
