@@ -7,49 +7,50 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-
   :root {
-    --color-bg: #17181c;
-    --color-bg-alt: #23242a;
-    --color-surface: #23242a;
-    --color-surface-hover: #282a31;
-    --color-card-glow: 0 2px 32px 0 #2970fa24;
-    --color-card-border: #23242a;
-    --color-primary: #2970fa;
-    --color-primary-hover: #3b82f6;
-    --color-secondary: #a1a1aa;
-    --color-accent: #8b5cf6;
-    --color-text: #f4f4f5;
-    --color-text-secondary: #a3a3b2;
-    --color-card-shadow: 0 6px 32px 0 #0008;
+    --color-bg: #101016;
+    --color-bg-alt: #191925;
+    --color-card: #1a1a28;
+    --color-card-glass: rgba(26, 26, 40, 0.82);
+    --color-primary: #4F8CFF;
+    --color-primary-hover: #6ea2ff;
+    --color-secondary: #8256FF;
+    --color-accent: #FAFF00;
+    --color-border: #232335;
+    --color-text: #f6f7fb;
+    --color-text-secondary: #8d93b9;
+    --color-scrollbar: #22223b;
+    --color-scrollbar-thumb: #393966;
+    --color-modal-bg: rgba(10, 12, 20, 0.87);
     --radius-lg: 18px;
     --radius-md: 12px;
-    --radius-sm: 7px;
-    --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
-    --font-main: 'Inter', 'Poppins', 'Segoe UI', Arial, sans-serif;
+    --radius-sm: 6px;
+    --shadow-elevated: 0 10px 40px 0 rgba(0,0,0,0.52), 0 1.5px 6px 0 rgba(79,140,255,0.04);
+    --shadow-card: 0 4px 24px 0 rgba(30,40,90,0.22);
+    --transition: 0.22s cubic-bezier(.4,0,.2,1);
+    --font-main: 'Inter', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  html, body {
+    height: 100%;
+    min-height: 100vh;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-main);
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+    scroll-behavior: smooth;
+    overscroll-behavior-y: none;
   }
 
   * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    transition: background var(--transition), color var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition);
-  }
-
-  html, body {
-    height: 100%;
-    font-family: var(--font-main);
-    background: var(--color-bg);
-    color: var(--color-text);
-    line-height: 1.6;
-    overflow-y: auto;
-    font-size: 16px;
-    letter-spacing: 0.02em;
   }
 
   ::selection {
@@ -59,136 +60,141 @@
 
   ::-webkit-scrollbar {
     width: 10px;
-    background: var(--color-bg);
+    background: var(--color-scrollbar);
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--color-surface);
-    border-radius: 8px;
+    background: var(--color-scrollbar-thumb);
+    border-radius: 15px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
   }
 
   header {
     text-align: center;
-    padding: 54px 0 34px;
+    padding: 64px 0 38px 0;
   }
 
   header h1 {
-    font-family: 'Poppins', var(--font-main);
-    font-size: clamp(2.5rem, 7vw, 3.5rem);
+    font-size: clamp(2.5rem, 5vw, 3.8rem);
     font-weight: 700;
     color: var(--color-text);
-    letter-spacing: 0.03em;
-    text-shadow: 0 2px 24px #2970fa26;
-    background: linear-gradient(90deg,#fff 60%,#2970fa 100%);
-    background-clip: text;
+    letter-spacing: 1.5px;
+    text-shadow: 0 6px 36px var(--color-primary), 0 1px 0 #232335;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
     -webkit-background-clip: text;
-    color: transparent;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 36px;
-    max-width: 1400px;
+    gap: 36px 30px;
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 0 32px 60px;
+    padding: 24px 40px 64px 40px;
   }
 
   .game-card {
-    background: linear-gradient(120deg, #23242a 75%, #222439 100%);
+    background: var(--color-card-glass);
     border-radius: var(--radius-lg);
-    box-shadow: var(--color-card-shadow), var(--color-card-glow);
-    border: 1.5px solid var(--color-card-border);
-    transition: 
-      transform var(--transition), 
-      box-shadow var(--transition), 
-      border-color var(--transition),
-      background var(--transition);
+    padding: 20px 16px 24px 16px;
+    border: 1.5px solid var(--color-border);
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 0 18px;
-    cursor: pointer;
-    min-height: 330px;
-    position: relative;
-    overflow: hidden;
-    will-change: transform;
+    gap: 19px;
     text-align: center;
-    gap: 15px;
+    overflow: hidden;
+    position: relative;
+    transition: 
+      background var(--transition),
+      transform var(--transition),
+      box-shadow var(--transition),
+      border-color var(--transition);
+    outline: none;
+    min-height: 340px;
   }
-  .game-card:hover, .game-card:focus-within {
-    background: linear-gradient(105deg, #262739 80%, #2b2c47 100%);
-    transform: translateY(-6px) scale(1.025);
-    box-shadow: 0 12px 44px 0 #2970fa30, 0 2px 32px 0 #2970fa24;
-    border-color: #2970fa50;
+  .game-card:hover,
+  .game-card:focus-within {
+    background: linear-gradient(120deg, #23234a 0%, #29294a 100%);
+    border-color: var(--color-primary);
+    transform: scale(1.045) translateY(-4px);
+    box-shadow: 0 8px 36px 0 var(--color-primary-hover), var(--shadow-elevated);
     z-index: 2;
   }
 
   .game-card img {
-    width: 100%;
-    height: 155px;
-    max-width: 100%;
+    width: 98%;
+    max-width: 210px;
+    height: 150px;
+    border-radius: var(--radius-md);
     object-fit: cover;
-    border-top-left-radius: var(--radius-lg);
-    border-top-right-radius: var(--radius-lg);
-    margin-bottom: 0.5rem;
-    box-shadow: 0 1px 12px #000a;
-    background: #1e1e23;
-    aspect-ratio: 7/5;
-    border-bottom: 1.5px solid #22263a;
+    box-shadow: 0 2px 14px 0 rgba(79,140,255,0.10);
+    border: 1px solid var(--color-border);
+    background: #181828;
+    user-select: none;
+    pointer-events: none;
   }
 
   .game-name {
-    font-size: 1.15rem;
-    font-family: 'Poppins', var(--font-main);
+    font-size: 1.09rem;
+    font-weight: 600;
     color: var(--color-text);
-    font-weight: 700;
-    margin: 22px 0 10px;
-    text-align: center;
-    text-shadow: 0 0 12px #2970fa09;
-    letter-spacing: 0.01em;
-    min-height: 44px;
+    padding: 0 6px;
+    min-height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 95%;
+    width: 100%;
+    word-break: break-word;
+    letter-spacing: 0.06em;
+    text-shadow: 0 2px 6px rgba(79,140,255,0.05);
   }
 
   .game-button {
-    margin-top: auto;
-    background: linear-gradient(90deg, #2970fa 55%, #8b5cf6 100%);
-    color: #fff;
-    padding: 12px 0;
-    width: 80%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary) 85%);
+    padding: 12px 0 10px 0;
     border: none;
     border-radius: var(--radius-md);
-    font-size: 1rem;
-    font-weight: 600;
-    font-family: inherit;
-    box-shadow: 0 3px 16px #2970fa22;
-    letter-spacing: 0.05em;
-    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    cursor: pointer;
+    font-size: 1.01rem;
+    font-weight: 700;
+    color: #fff;
+    width: 100%;
+    margin-top: auto;
+    letter-spacing: 0.04em;
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 7px;
+    align-items: center;
+    box-shadow: 0 3px 18px 0 rgba(79,140,255,0.12);
+    gap: 0.5em;
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
     outline: none;
+    border: 1.3px solid transparent;
     position: relative;
-    z-index: 1;
+    z-index: 3;
+  }
+  .game-button:hover,
+  .game-button:focus-visible {
+    background: linear-gradient(90deg, var(--color-primary-hover) 20%, var(--color-secondary) 90%);
+    color: var(--color-accent);
+    transform: scale(1.045);
+    border-color: var(--color-primary-hover);
+    box-shadow: 0 2px 12px 0 var(--color-primary-hover), 0 0px 3px 0 var(--color-primary);
   }
   .game-button img {
     width: 26px;
     height: 26px;
-    filter: drop-shadow(0 1px 7px #2970fa22);
+    filter: drop-shadow(0 1px 6px var(--color-primary));
     transition: transform var(--transition);
   }
-  .game-button:hover, .game-button:focus {
-    background: linear-gradient(90deg, #3b82f6 55%, #a78bfa 100%);
-    transform: scale(1.05);
-    box-shadow: 0 6px 24px #2970fa44;
-  }
-  .game-button:hover img, .game-button:focus img {
-    transform: scale(1.1) rotate(-5deg);
+  .game-button:hover img,
+  .game-button:focus-visible img {
+    transform: scale(1.13) rotate(-6deg);
   }
 
   .modal {
@@ -196,169 +202,171 @@
     position: fixed;
     top: 0; left: 0;
     width: 100vw; height: 100vh;
-    background: rgba(23,24,28,0.94);
+    background-color: var(--color-modal-bg);
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    animation: fadeIn 0.28s ease;
-    backdrop-filter: blur(6px) saturate(1.3);
+    animation: fadeIn 0.25s cubic-bezier(.4,0,.2,1);
+    backdrop-filter: blur(10px);
   }
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
   }
-
   .modal-content {
-    background: linear-gradient(120deg,#23242a 80%,#222439 100%);
-    border-radius: var(--radius-lg);
-    border: 1.5px solid #23242a;
-    box-shadow: 0 10px 36px #0009, 0 2px 32px #2970fa19;
-    width: 90vw; height: 88vh;
-    max-width: 1320px; max-height: 850px;
+    background: var(--color-card-glass);
+    backdrop-filter: blur(16px) brightness(1.06);
+    width: 92vw; height: 92vh;
+    max-width: 1440px; max-height: 840px;
     position: relative;
+    border-radius: var(--radius-lg);
+    border: 1.5px solid var(--color-primary);
+    box-shadow: var(--shadow-elevated);
     overflow: hidden;
-    animation: scaleUp 0.32s cubic-bezier(0.26,0.98,0.44,1.0);
+    animation: scaleUp 0.3s cubic-bezier(.4,0,.2,1);
     display: flex;
     flex-direction: column;
   }
   @keyframes scaleUp {
-    from { transform: scale(0.94) translateY(18px); opacity: 0; }
+    from { transform: scale(0.95) translateY(14px); opacity: 0; }
     to { transform: scale(1) translateY(0); opacity: 1; }
   }
   .modal-content iframe {
     width: 100%;
     height: 100%;
     border: none;
-    background: #18181f;
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    flex: 1;
+    background-color: #15151f;
+    border-radius: var(--radius-md);
+    box-shadow: 0 2px 8px 0 var(--color-primary-hover);
   }
-
   .close-btn, .fullscreen-btn {
     position: absolute;
-    top: 16px;
-    background: rgba(35,36,42,0.95);
-    color: var(--color-secondary);
+    top: 18px;
+    background: linear-gradient(120deg, var(--color-bg-alt), var(--color-card));
+    color: var(--color-text-secondary);
     border: none;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     font-size: 22px;
     cursor: pointer;
-    line-height: 40px;
+    line-height: 36px;
     text-align: center;
     z-index: 1001;
+    box-shadow: 0 2px 8px 0 rgba(20,20,30,0.26);
     transition: background var(--transition), color var(--transition), transform var(--transition);
-    box-shadow: 0 2px 12px #0007;
-    user-select: none;
+    outline: none;
   }
   .close-btn {
     right: 18px;
   }
   .fullscreen-btn {
-    right: 66px;
-    font-size: 20px;
+    right: 64px;
+    font-size: 19px;
   }
-  .close-btn:hover, .fullscreen-btn:hover, .close-btn:focus, .fullscreen-btn:focus {
+  .close-btn:hover, .fullscreen-btn:hover,
+  .close-btn:focus-visible, .fullscreen-btn:focus-visible {
+    background: linear-gradient(120deg, var(--color-primary-hover), var(--color-secondary));
     color: #fff;
-    background: #2970fa;
     transform: scale(1.13);
-    outline: none;
+    box-shadow: 0 3px 12px 0 var(--color-primary);
   }
 
   .toggle-container {
     position: fixed;
-    bottom: 22px;
-    left: 22px;
+    bottom: 28px;
+    left: 28px;
     display: flex;
     align-items: center;
-    gap: 11px;
-    background: linear-gradient(90deg,#23242a 70%,#222439 100%);
-    backdrop-filter: blur(7px);
-    padding: 11px 19px;
+    gap: 13px;
+    background: linear-gradient(120deg, #1a1a28 60%, #23234a 100%);
+    backdrop-filter: blur(8px) brightness(1.06);
+    padding: 13px 22px;
     border-radius: 24px;
-    box-shadow: 0 4px 20px #0006;
-    z-index: 20;
-    border: 1.2px solid #22263a;
+    box-shadow: 0 4px 18px 0 rgba(36,40,60,0.25);
+    border: 1.5px solid var(--color-border);
+    z-index: 10;
   }
 
   .toggle-container label {
     color: var(--color-text-secondary);
-    font-size: 1.04rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    cursor: pointer;
+    font-size: 1.02rem;
+    font-weight: 500;
     user-select: none;
-    transition: color var(--transition);
+    letter-spacing: 0.025em;
   }
 
   .toggle-container input[type="checkbox"] {
-    width: 44px;
-    height: 22px;
+    width: 46px;
+    height: 24px;
     appearance: none;
-    background: #20212b;
-    border-radius: 22px;
-    border: 1.2px solid #22263a;
+    background: var(--color-bg-alt);
+    border-radius: 20px;
     position: relative;
     outline: none;
     cursor: pointer;
-    transition: background var(--transition), border-color var(--transition);
+    border: 1.5px solid var(--color-primary);
+    transition: background var(--transition), border var(--transition);
+    box-shadow: 0 0.5px 2px 0 var(--color-primary);
   }
   .toggle-container input[type="checkbox"]:checked {
-    background: linear-gradient(90deg, #2970fa 75%, #8b5cf6 100%);
-    border-color: #2970fa99;
+    background: linear-gradient(90deg, var(--color-primary) 60%, var(--color-secondary));
+    border-color: var(--color-secondary);
   }
   .toggle-container input[type="checkbox"]::before {
     content: '';
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     background: #fff;
     top: 1px;
     left: 1px;
-    box-shadow: 0 1.5px 7px #2970fa11;
     transition: transform var(--transition), background var(--transition);
+    box-shadow: 0 1.5px 8px 0 var(--color-primary);
   }
   .toggle-container input[type="checkbox"]:checked::before {
     transform: translateX(22px);
-    background: #2970fa;
+    background: var(--color-primary-hover);
   }
 
   #debug-info {
     position: fixed;
-    left: 22px;
-    bottom: 74px;
-    background: #1e1f25ee;
-    color: #f1f1f4;
-    padding: 11px 16px;
+    bottom: 80px;
+    left: 28px;
+    background: var(--color-card-glass);
+    color: var(--color-text-secondary);
+    padding: 12px 18px;
     border-radius: var(--radius-md);
     font-size: 1rem;
-    box-shadow: 0 2px 10px #0007;
-    border: 1.2px solid #23242a;
-    font-family: 'Poppins', var(--font-main);
+    border: 1.2px solid var(--color-border);
+    box-shadow: 0 1.5px 6px 0 rgba(50,60,80,0.14);
     display: none;
-    z-index: 30;
+    z-index: 11;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 830px) {
     .container {
-      grid-template-columns: 1fr;
-      padding: 0 6px 60px;
-      gap: 21px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 23px 12px;
+      padding: 15px 5vw 22vw 5vw;
     }
     .game-card {
-      min-height: 260px;
-      padding: 0 0 12px;
-    }
-    header {
-      padding: 32px 0 21px;
+      min-height: 240px;
+      padding: 14px 7px 18px 7px;
     }
     .toggle-container, #debug-info {
-      left: 6px;
-      bottom: 10px;
-      padding: 8px 11px;
+      left: 4vw;
+      padding: 10px 10px;
+      border-radius: 18px;
+      font-size: 0.96rem;
     }
+    #debug-info { bottom: 68px }
+  }
+  @media (max-width: 600px) {
+    header { padding: 34px 0 14px 0; }
+    .container { padding: 10px 2vw 12vw 2vw; }
+    .game-card img { height: 95px; }
   }
 </style>
   </head>
