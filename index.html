@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary: #2563eb;
+        --primary-accent: #60a5fa;
+        --bg: #0a0b10;
+        --bg-card: #181b22e8;
+        --bg-card-hover: #222634fa;
+        --fg: #f5f6fa;
+        --fg-muted: #b0b4bf;
+        --border: #23263a;
+        --border-hover: #2e3450;
+        --shadow: 0 4px 32px 0 rgba(30,41,59,.25);
+        --radius: 18px;
+        --transition: .18s cubic-bezier(.4,0,.2,1);
+      }
+
+      html, body {
+        height: 100%;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: 'Inter', 'Space Grotesk', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        scroll-behavior: smooth;
+      }
+
+      ::selection {
+        background: var(--primary-accent);
+        color: #fff;
+      }
+
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #23263a;
+        border-radius: 7px;
+      }
+
+      header {
+        text-align: center;
+        padding: 60px 0 32px 0;
+        background: linear-gradient(90deg, #23263a 0%, #0a0b10 100%);
+        margin-bottom: 16px;
+        box-shadow: 0 1px 0 #23263a44;
+      }
+      header h1 {
+        font-family: 'Space Grotesk', 'Inter', sans-serif;
+        font-size: clamp(2.7rem, 6vw, 4.5rem);
+        font-weight: 700;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 38px;
+        max-width: 1240px;
+        padding: 0 32px 80px 32px;
+        margin: 0 auto;
+      }
+
+      .game-card {
+        background: var(--bg-card);
+        border-radius: var(--radius);
+        border: 1.5px solid var(--border);
+        box-shadow: var(--shadow);
+        padding: 22px 18px 18px 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        transition: 
+          background var(--transition), 
+          border-color var(--transition),
+          transform 0.14s cubic-bezier(.4,0,.2,1),
+          box-shadow 0.22s cubic-bezier(.4,0,.2,1);
+        cursor: pointer;
+        min-height: 360px;
+        position: relative;
+        overflow: hidden;
+      }
+      .game-card:hover, .game-card:focus-within {
+        background: var(--bg-card-hover);
+        border-color: var(--border-hover);
+        transform: translateY(-4px) scale(1.028);
+        box-shadow: 0 6px 36px 0 rgba(37,99,235,0.18), var(--shadow);
+        z-index: 2;
+      }
+      .game-card img {
+        width: 100%;
+        height: 145px;
+        object-fit: cover;
+        border-radius: 13px;
+        background: #23263a;
+        margin-bottom: 18px;
+        box-shadow: 0 2px 10px 0 rgba(16,30,71,0.11);
+        border: 1px solid #23263a3c;
+      }
+      .game-name {
+        font-family: 'Space Grotesk', 'Inter', sans-serif;
+        font-size: 1.20rem;
+        font-weight: 600;
+        color: var(--fg);
+        margin-bottom: 12px;
+        letter-spacing: 0.5px;
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .game-button {
+        background: linear-gradient(90deg, var(--primary) 60%, var(--primary-accent));
+        color: #fff;
+        border: none;
+        border-radius: 13px;
+        padding: 11px 0;
+        font-size: 1.08rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-top: auto;
+        cursor: pointer;
+        box-shadow: 0 2px 18px 0 rgba(37,99,235,0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5em;
+        transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+        outline: 0;
+        position: relative;
+        z-index: 1;
+      }
+      .game-button img {
+        width: 26px;
+        height: 26px;
+        transition: transform 0.2s cubic-bezier(.4,0,.2,1);
+      }
+      .game-button:hover, .game-button:focus {
+        background: linear-gradient(90deg, var(--primary-accent), var(--primary));
+        transform: scale(1.045);
+        box-shadow: 0 6px 22px 0 rgba(37,99,235,0.22);
+      }
+      .game-button:hover img, .game-button:focus img {
+        transform: scale(1.19) rotate(-6deg);
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background: rgba(18, 20, 37, 0.94);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        animation: fadeIn 0.24s cubic-bezier(.4,0,.2,1);
+        backdrop-filter: blur(5px);
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .modal-content {
+        background: #141622f2;
+        border-radius: 18px;
+        border: 1.5px solid #282e51;
+        box-shadow: 0 8px 54px 0 rgba(30,41,59,0.33);
+        width: 92vw; height: 90vh;
+        max-width: 1080px; max-height: 720px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        animation: scaleUp 0.26s cubic-bezier(.4,0,.2,1);
+      }
+      @keyframes scaleUp {
+        from { transform: scale(0.97) translateY(24px); opacity: 0; }
+        to { transform: scale(1) translateY(0); opacity: 1; }
+      }
+      .modal-content iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: #181b22;
+      }
+      .close-btn, .fullscreen-btn {
+        position: absolute;
+        top: 19px;
+        background: #23263aee;
+        color: #b0b4bf;
+        border: none;
+        border-radius: 50%;
+        width: 38px;
+        height: 38px;
+        font-size: 23px;
+        cursor: pointer;
+        line-height: 38px;
+        text-align: center;
+        z-index: 1001;
+        box-shadow: 0 1px 6px 0 #11131b40;
+        transition: background var(--transition), color var(--transition), transform .13s cubic-bezier(.4,0,.2,1);
+      }
+      .close-btn {
+        right: 19px;
+      }
+      .fullscreen-btn {
+        right: 70px;
+        font-size: 18px;
+      }
+      .close-btn:hover, .fullscreen-btn:hover, .close-btn:focus, .fullscreen-btn:focus {
+        background: var(--primary);
+        color: #fff;
+        transform: scale(1.12);
+        outline: 2px solid var(--primary-accent);
+      }
+
+      .toggle-container {
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        background: #181b22cc;
+        backdrop-filter: blur(7px);
+        padding: 10px 20px;
+        border-radius: 24px;
+        box-shadow: 0 2px 12px 0 #181b2240;
+        z-index: 2000;
+      }
+      .toggle-container label {
+        color: var(--fg-muted);
+        font-size: 1.01rem;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        user-select: none;
+      }
+      .toggle-container input[type="checkbox"] {
+        width: 46px;
+        height: 24px;
+        appearance: none;
+        background: #23263a;
+        border-radius: 20px;
+        position: relative;
+        outline: none;
+        cursor: pointer;
+        transition: background var(--transition);
+        border: 1.5px solid #23263a;
+      }
+      .toggle-container input[type="checkbox"]:checked {
+        background: linear-gradient(90deg, var(--primary), var(--primary-accent));
+        border-color: var(--primary);
+      }
+      .toggle-container input[type="checkbox"]::before {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #fff;
+        top: 2px;
+        left: 2px;
+        transition: transform var(--transition), background var(--transition);
+        box-shadow: 0 1px 4px 0 #23263a38;
+      }
+      .toggle-container input[type="checkbox"]:checked::before {
+        transform: translateX(22px);
+        background: var(--primary-accent);
+      }
+
+      #debug-info {
+        position: fixed;
+        bottom: 90px;
+        left: 30px;
+        background: #181b22dd;
+        color: var(--fg-muted);
+        padding: 11px 17px;
+        border-radius: 12px;
+        font-size: 0.98rem;
+        box-shadow: 0 2px 8px 0 #181b2240;
+        display: none;
+        z-index: 2000;
+      }
+
+      @media (max-width: 700px) {
+        header {
+          padding: 38px 0 22px 0;
+        }
+        .container {
+          gap: 22px;
+          padding: 0 8px 60px 8px;
+        }
+        .modal-content {
+          max-width: 99vw;
+          max-height: 80vh;
+        }
+        .toggle-container {
+          left: 6px;
+          bottom: 6px;
+          padding: 7px 11px;
+        }
+        #debug-info {
+          left: 6px;
+          bottom: 52px;
+          padding: 9px 10px;
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Game Hub</h1>
+    </header>
+
+    <div class="container">
+      <!-- Game cards go here, unchanged for brevity -->
+      <!-- ... original content ... -->
+          <div class="game-card" onclick="openGranny('./granny.html')">
+        <img
+          src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABsbGxscGx4hIR4qLSgtKj04MzM4PV1CR0JHQl2NWGdYWGdYjX2Xe3N7l33gsJycsOD/2c7Z//////////////8BGxsbGxwbHiEhHiotKC0qPTgzMzg9XUJHQkdCXY1YZ1[...]
+          alt="Granny"
+        />
+        <div class="game-name">Granny</div>
+          <button class="game-button">
+    <img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" />
+  </button>
+      </div>
+      <!-- ... rest of your game cards ... -->
+      <div class="game-card" onclick="window.location.href='./granny2.html'">
+        <img
+          src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABsbGxscGx4hIR4qLSgtKj04MzM4PV1CR0JHQl2NWGdYWGdYjX2Xe3N7l33gsJycsOD/2c7Z//////////////8BGxsbGxwbHiEhHiotKC0qPTgzMzg9XUJHQkdCXY1YZ1[...]
+          alt="Granny 2"
+        />
+        <div class="game-name">Granny 2</div>
+          <button class="game-button">
+    <img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" />
+  </button>
+      </div>
+      <!-- ... other cards as in your original ... -->
+      <div class="game-card" onclick="openGame('./er.html')">
+        <img
+          src="https://th.bing.com/th/id/OIP.AKJ1l-LyZNJAesQjDZJSDgHaHa?w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.1&pid=3.1&rm=2"
+          alt="escape road"
+        />
+        <div class="game-name">escape road</div>
+          <button class="game-button">
+    <img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" />
+  </button>
+      </div>
+      <!-- ... etc ... -->
+      <!-- For brevity, not all cards are repeated here, but copy them as in your original file -->
+    </div>
+
+    <div class="modal" id="gameModal">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeModal()" title="Close">×</button>
+        <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
+        <iframe id="gameIframe" src="" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="toggle-container">
+      <label for="granny-toggle" id="toggle-label">disable jumpscare</label>
+      <input type="checkbox" id="granny-toggle" />
+    </div>
+    
+    <div id="debug-info">
+      Debug Info
+    </div>
+
+    <script>
+      const modal = document.getElementById('gameModal');
+      const iframe = document.getElementById('gameIframe');
+      const fullscreenBtn = document.querySelector('.fullscreen-btn');
+      const toggle = document.getElementById('granny-toggle');
+      const toggleLabel = document.getElementById('toggle-label');
+
+      // Load saved toggle state
+      const savedState = localStorage.getItem('grannyToggle');
+      if (savedState !== null) {
+          toggle.checked = JSON.parse(savedState);
+          updateToggleLabel(toggle.checked);
+      }
+
+      // Update state on toggle change
+      toggle.addEventListener('change', function () {
+          localStorage.setItem('grannyToggle', JSON.stringify(this.checked));
+          updateToggleLabel(this.checked);
+      });
+
+      function updateToggleLabel(isChecked) {
+          toggleLabel.textContent = isChecked ? 'enable jumpscare' : 'disable jumpscare';
+      }
+      
+      function openGranny(url) {
+        const grannyToggle = document.getElementById('granny-toggle').checked;
+
+        if (grannyToggle) {
+          // If toggle is enabled, fetch the alternate content
+          const fetchUrl = 'https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/original.html';
+
+          fetch(fetchUrl)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`Failed to fetch HTML content. Status: ${response.status}`);
+              }
+              return response.text();
+            })
+            .then(htmlContent => {
+              // Replace the current document's content with the fetched HTML
+              document.open();
+              document.write(htmlContent);
+              document.close();
+            })
+            .catch(error => {
+              console.error('Error fetching or injecting HTML content:', error);
+              alert('Failed to load the alternate content. Please try again later.');
+            });
+        } else {
+          // If toggle is disabled, redirect to the default URL
+          window.location.href = url;
+        }
+      }
+
+      function openGame(url) {
+        const grannyToggle = toggle.checked;
+
+        if (grannyToggle && url.includes('granny.html')) {
+            url = 'https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/original.html';
+        }
+
+        if (url.includes('granny.html') || url.includes('granny2.html')) {
+            fullscreenBtn.style.display = 'none';
+        } else {
+            fullscreenBtn.style.display = 'block';
+        }
+
+        iframe.src = url;
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        iframe.src = '';
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      function toggleFullscreen() {
+        if (iframe.requestFullscreen) {
+            iframe.requestFullscreen();
+        } else if (iframe.mozRequestFullScreen) {
+            iframe.mozRequestFullScreen();
+        } else if (iframe.webkitRequestFullscreen) {
+            iframe.webkitRequestFullscreen();
+        } else if (iframe.msRequestFullscreen) {
+            iframe.msRequestFullscreen();
+        }
+      }
+
+      modal.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modal.style.display === 'flex') {
+            closeModal();
+        }
+      });
+    </script>
+  </body>
+</html>
