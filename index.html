@@ -1,425 +1,498 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Game Hub</title>
-<!-- Google Fonts for a modern look -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
-  rel="stylesheet"
-/>
-<style>
-  body {
-    margin: 0;
-    font-family: 'Inter', 'Poppins', sans-serif;
-    background-color: #121212;
-    color: #e0e0e0;
-    line-height: 1.6;
-  }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-  /* Scrollbar styling for dark theme */
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #1a1a1a;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: #333;
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: #444;
-  }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        transition: all 0.3s ease;
+      }
 
-  /* Header styling */
-  header {
-    padding: 30px 20px;
-    text-align: center;
-    background-color: #1f1f1f;
-  }
+      html, body {
+        height: 100%;
+        font-family: 'Inter', 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #0a0a0a;
+        color: #e0e0e0;
+        line-height: 1.6;
+        overflow-y: auto;
+      }
 
-  header h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
-    margin-bottom: 10px;
-    color: #f0f0f0;
-  }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #2a2a2a;
+        border-radius: 10px;
+        border: 2px solid #0a0a0a;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: #3a3a3a;
+      }
 
-  /* Search bar styling */
-  .search-container {
-    display: flex;
-    justify-content: center;
-    padding: 15px 20px;
-    background-color: #1f1f1f;
-  }
+      header {
+        text-align: center;
+        padding: 50px 20px 30px;
+        background: linear-gradient(180deg, #0a0a0a 0%, rgba(10,10,10,0.8) 100%);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+      }
 
-  #searchInput {
-    width: 100%;
-    max-width: 500px;
-    padding: 12px 20px;
-    border-radius: 25px;
-    border: none;
-    outline: none;
-    background-color: #2a2a2a;
-    color: #fff;
-    font-size: 1rem;
-    transition: background-color 0.3s;
-  }
+      header h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 600;
+        color: #f0f0f0;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff 0%, #a0a0a0 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
 
-  #searchInput::placeholder {
-    color: #888;
-  }
+      .search-container {
+        max-width: 600px;
+        margin: 0 auto;
+        position: relative;
+      }
 
-  #searchInput:focus {
-    background-color: #3a3a3a;
-  }
+      .search-bar {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: #fff;
+        outline: none;
+        transition: all 0.3s ease;
+      }
 
-  /* Container for game cards */
-  .container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    max-width: 1300px;
-    margin: 0 auto;
-  }
+      .search-bar:focus {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+      }
 
-  /* Game card styles */
-  .game-card {
-    background: rgba(26, 26, 26, 0.8);
-    border-radius: 12px;
-    padding: 15px;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-    cursor: pointer;
-  }
+      .search-bar::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
 
-  .game-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.4);
-    background: rgba(42, 45, 48, 0.9);
-  }
+      .container {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 35px;
+        max-width: 1400px;
+        padding: 20px 40px 60px;
+        margin: 0 auto;
+      }
 
-  .game-card img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
+      .game-card {
+        background: rgba(20, 20, 20, 0.6);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        text-align: center;
+        overflow: hidden;
+      }
 
-  .game-name {
-    margin-top: 12px;
-    font-size: clamp(0.9rem, 2vw, 1rem);
-    font-weight: 500;
-    text-align: center;
-  }
+      .game-card:hover {
+        transform: translateY(-5px);
+        background-color: rgba(30, 30, 30, 0.8);
+        border-color: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+      }
 
-  /* Play button styles */
-  .game-button {
-    margin-top: 10px;
-    background: linear-gradient(135deg, #1446FF, #3A66FF);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    transition: all 0.3s;
-  }
+      .game-card img {
+        width: 100%;
+        height: 160px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 2px solid rgba(255, 255, 255, 0.05);
+      }
 
-  .game-button img {
-    width: 24px;
-    height: 24px;
-    margin-right: 8px;
-    transition: transform 0.3s;
-  }
+      .game-name {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #f0f0f0;
+        padding: 0 5px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
 
-  .game-button:hover {
-    background: #3A66FF;
-  }
+      .game-button {
+        background: linear-gradient(135deg, #1446FF, #3A66FF);
+        padding: 12px 0;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600;
+        width: 100%;
+        margin-top: auto;
+        letter-spacing: 0.5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 20px rgba(58, 102, 255, 0.3);
+        color: white;
+      }
 
-  .game-button:hover img {
-    transform: scale(1.1);
-  }
+      .game-button img {
+        width: 24px;
+        height: 24px;
+        border: none;
+      }
 
-  /* Modal styles */
-  .modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(10, 10, 10, 0.9);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    padding: 20px;
-  }
+      .game-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 30px rgba(58, 102, 255, 0.4);
+      }
 
-  .modal-content {
-    position: relative;
-    background: rgba(26,26,26,0.8);
-    backdrop-filter: blur(12px);
-    width: 100%;
-    max-width: 1400px;
-    height: 90%;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(5, 5, 5, 0.95);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        animation: fadeIn 0.3s ease-out;
+      }
 
-  iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
 
-  /* Close and fullscreen buttons */
-  .close-btn, .fullscreen-btn {
-    position: absolute;
-    top: 15px;
-    background: transparent;
-    color: #aaa;
-    font-size: 22px;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
-    transition: color 0.3s, transform 0.3s;
-    z-index: 1001;
-  }
+      .modal-content {
+        background: rgba(20, 20, 20, 0.9);
+        backdrop-filter: blur(16px);
+        width: 90%; height: 90%;
+        max-width: 1400px; max-height: 800px;
+        position: relative;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        overflow: hidden;
+        animation: scaleUp 0.35s cubic-bezier(0.165, 0.840, 0.440, 1.000);
+      }
 
-  .close-btn:hover, .fullscreen-btn:hover {
-    color: #fff;
-    transform: scale(1.1);
-  }
+      .close-btn, .fullscreen-btn {
+        position: absolute;
+        top: 20px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+        cursor: pointer;
+        backdrop-filter: blur(4px);
+        z-index: 1001;
+        transition: all 0.3s ease;
+      }
 
-  .close-btn {
-    right: 15px;
-  }
+      .close-btn {
+        right: 20px;
+      }
 
-  .fullscreen-btn {
-    right: 60px;
-  }
+      .fullscreen-btn {
+        right: 70px;
+        font-size: 18px;
+      }
 
-  /* Toggle container for jumpscare toggle */
-  .toggle-container {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background: rgba(26,26,26,0.6);
-    backdrop-filter: blur(8px);
-    padding: 10px 15px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-  }
+      .close-btn:hover, .fullscreen-btn:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+      }
 
-  .toggle-container label {
-    color: #e0e0e0;
-    font-size: 1rem;
-    font-weight: 500;
-  }
+      .toggle-container {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(20, 20, 20, 0.8);
+        backdrop-filter: blur(8px);
+        padding: 12px 20px;
+        border-radius: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      }
 
-  /* Toggle switch styling */
-  input[type="checkbox"] {
-    width: 40px;
-    height: 20px;
-    appearance: none;
-    background: #2a2a2a;
-    border-radius: 20px;
-    position: relative;
-    outline: none;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
+      .toggle-container label {
+        color: #e0e0e0;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
 
-  input[type="checkbox"]:checked {
-    background: #1449FF;
-  }
+      .toggle-container input[type="checkbox"] {
+        width: 44px;
+        height: 22px;
+        appearance: none;
+        background: #2A2D30;
+        border-radius: 20px;
+        position: relative;
+        outline: none;
+        cursor: pointer;
+      }
 
-  input[type="checkbox"]::before {
-    content: '';
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #fff;
-    top: 1px;
-    left: 1px;
-    transition: transform 0.3s;
-  }
+      .toggle-container input[type="checkbox"]:checked {
+        background: #1449FF;
+      }
 
-  input[type="checkbox"]:checked::before {
-    transform: translateX(20px);
-  }
-</style>
-</head>
-<body>
+      .toggle-container input[type="checkbox"]::before {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #fff;
+        top: 2px;
+        left: 2px;
+        transition: transform 0.3s ease;
+      }
 
-<header>
-  <h1>Game Hub</h1>
-</header>
+      .toggle-container input[type="checkbox"]:checked::before {
+        transform: translateX(22px);
+      }
 
-<!-- Search bar -->
-<div class="search-container">
-  <input type="text" id="searchInput" placeholder="Search games..." />
-</div>
+      .hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Game Hub</h1>
+      <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search games..." id="searchInput">
+      </div>
+    </header>
 
-<!-- Game cards container -->
-<div class="container" id="gameContainer">
-  <!-- Example game card -->
-  <div class="game-card" data-name="Granny" onclick="openGame('./granny.html')">
-    <img src="https://via.placeholder.com/300x140/222/fff?text=Granny" alt="Granny" />
-    <div class="game-name">Granny</div>
-    <button class="game-button" onclick="event.stopPropagation(); openGame('./granny.html')">
-      <img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play" />
-      Play
-    </button>
-  </div>
-  <!-- Add your game cards similarly, ensuring each has data-name attribute for filtering -->
-  <!-- Example: -->
-  <div class="game-card" data-name="Wheely Collection" onclick="openGame('./wheely.html')">
-    <img src="https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/logoBruh.png" alt="Wheely Collection" />
-    <div class="game-name">Wheely Collection</div>
-    <button class="game-button" onclick="event.stopPropagation(); openGame('./wheely.html')">
-      <img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play" />
-      Play
-    </button>
-  </div>
-  <!-- Repeat for all your game cards -->
-</div>
+    <div class="container">
+      <!-- All games copied from index2.html -->
+      <div class="game-card" onclick="openGranny('./granny.html')">
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABsbGxscGx4hIR4qLSgtKj04MzM4PV1CR0JHQl2NWGdYWGdYjX2Xe3N7l33gsJycsOD/2c7Z//////////////8BGxsbGxwbHiEhHiotKC0qPTgzMzg9XUJHQkdCXY1YZ1[...]" alt="Granny" />
+        <div class="game-name">Granny</div>
+        <button class="game-button"><img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" /></button>
+      </div>
 
-<!-- Modal for game iframe -->
-<div class="modal" id="gameModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal()" title="Close">×</button>
-    <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
-    <iframe id="gameIframe" src="" allowfullscreen></iframe>
-  </div>
-</div>
+      <div class="game-card" onclick="window.location.href='./granny2.html'">
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABsbGxscGx4hIR4qLSgtKj04MzM4PV1CR0JHQl2NWGdYWGdYjX2Xe3N7l33gsJycsOD/2c7Z//////////////8BGxsbGxwbHiEhHiotKC0qPTgzMzg9XUJHQkdCXY1YZ1[...]" alt="Granny 2" />
+        <div class="game-name">Granny 2</div>
+        <button class="game-button"><img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" /></button>
+      </div>
 
-<!-- Jumpscare toggle -->
-<div class="toggle-container">
-  <label for="granny-toggle" id="toggle-label">disable jumpscare</label>
-  <input type="checkbox" id="granny-toggle" />
-</div>
+      <div class="game-card" onclick="openGame('./er.html')">
+        <img src="https://th.bing.com/th/id/OIP.AKJ1l-LyZNJAesQjDZJSDgHaHa?w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.1&pid=3.1&rm=2" alt="escape road" />
+        <div class="game-name">escape road</div>
+        <button class="game-button"><img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" /></button>
+      </div>
 
-<!-- Optional debug info -->
-<div id="debug-info" style="position: fixed; bottom: 60px; left: 20px; background-color: #1a1a1a; padding: 10px; border-radius: 10px; font-size: 0.9rem; display: none;">
-  Debug Info
-</div>
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbx_-xD1Y9hG-1k_8ibsBhrWHUFud7t58ARoyOcKup3bFvo5nIYQxO-lIlcZpALmSEx5Hg/exec')">
+        <img src="https://th.bing.com/th/id/OIP.dQNuNT4THfWnLYJPL7U6uwHaHa?w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.1&pid=3.1&rm=2" alt="Pokemon Emerald" />
+        <div class="game-name">Pokemon Emerald</div>
+        <button class="game-button"><img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" /></button>
+      </div>
 
-<script>
-const modal = document.getElementById('gameModal');
-const iframe = document.getElementById('gameIframe');
-const fullscreenBtn = document.querySelector('.fullscreen-btn');
-const searchInput = document.getElementById('searchInput');
-const gameCards = document.querySelectorAll('.game-card');
-const toggle = document.getElementById('granny-toggle');
-const toggleLabel = document.getElementById('toggle-label');
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxWYXzXN3TRwxELxgrTkjmE5hyqPMgzdNn6clWSzVcU-m0m9MDdHHb-VP-VDnz06vNe/exec')">
+        <img src="https://th.bing.com/th/id/OIP.jOzV4TnyJtHAjycUBYCfkwHaLH?rs=1&pid=ImgDetMain" alt="Pokemon Leaf Green" />
+        <div class="game-name">Pokemon Leaf Green</div>
+        <button class="game-button"><img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" /></button>
+      </div>
 
-// Load toggle state
-const savedState = localStorage.getItem('grannyToggle');
-if (savedState !== null) {
-  toggle.checked = JSON.parse(savedState);
-  updateToggleLabel(toggle.checked);
-}
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwPWcmKvRggYtQsemkyBJ9w514oWlSDdCXgB9apslY2d6a3DHsG7esJpzHTR9Kuj-1L/exec')">
+        <img src="https://th.bing.com/th/id/OIP.ZMiaYrX6gTe4rmwIJqgphwHaEK?w=333&h=187&c=8&rs=1&qlt=90&o=6&dpr=1.1&pid=3.1&rm=2" alt="Pokemon Unbound" />
+        <div class="game-name">Pokemon Unbound</div>
+        <button class="game-button"><img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" /></button>
+      </div>
 
-// Save toggle state
-toggle.addEventListener('change', () => {
-  localStorage.setItem('grannyToggle', toggle.checked);
-  updateToggleLabel(toggle.checked);
-});
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbypOitjGD19RPkCYQ8vgJzFfmtMtnl3naBwSw9OhpqtalZs0k3Pri3nL7X76qUwdV9GGQ/exec')">
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAsJCQcJCQcJCQkJCwkJCQkJCQsJCwsMCwsLDA0QDBEODQ4MEhkSJRodJR0ZHxwpKRYlNzU2GioyPi0pMBk7IRP/2wBDAQcICAsJCxULCxUsHRkdLCwsLCwsLCwsLCwsLCws[...]" alt="Pokemon Ruby" />
+        <div class="game-name">Pokemon Ruby</div>
+        <button class="game-button"><img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" /></button>
+      </div>
 
-// Update toggle label
-function updateToggleLabel(isChecked) {
-  toggleLabel.textContent = isChecked ? 'enable jumpscare' : 'disable jumpscare';
-}
+      <div class="game-card" onclick="window.location.href='./W.html'">
+        <img src="https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/logoBruh.png" alt="wheely games" />
+        <div class="game-name">wheely collection</div>
+        <button class="game-button"><img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" /></button>
+      </div>
 
-// Filter game cards based on search
-searchInput.addEventListener('input', () => {
-  const query = searchInput.value.toLowerCase();
-  gameCards.forEach(card => {
-    const name = card.dataset.name.toLowerCase();
-    card.style.display = name.includes(query) ? 'block' : 'none';
-  });
-});
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwiQgeRHVDP8wzJ_CeSE1LyaKCMu1qdlopwylhD4LdBvBVd2y36VjlWY0iyk38WH0JiJA/exec')">
+        <img src="https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/logoBruh.png" alt="Basket Random" />
+        <div class="game-name">Basket Random</div>
+        <button class="game-button"><img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" /></button>
+      </div>
 
-// Open game iframe or fetch alternate HTML based on toggle
-function openGame(url) {
-  const grannyToggle = toggle.checked;
-  if (grannyToggle && url.includes('granny.html')) {
-    // Fetch and replace document content with alternate
-    fetch('https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/original.html')
-      .then(response => {
-        if (!response.ok) throw new Error('Fetch failed');
-        return response.text();
-      })
-      .then(html => {
-        document.open();
-        document.write(html);
-        document.close();
-      })
-      .catch(() => alert('Failed to load alternate content.'));
-  } else {
-    iframe.src = url;
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  }
-}
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbySnSeOuxeNgXf_mRnxhgTNrI0GTf75ACkCgLZgNKFiH18b_MUvbqsW1x0wlUljppDQ/exec')">
+        <img src="https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/logoBruh.png" alt="Volley Random" />
+        <div class="game-name">Volley Random</div>
+        <button class="game-button"><img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" /></button>
+      </div>
 
-// Open modal with game URL
-function openGame(url) {
-  iframe.src = url;
-  modal.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  // Hide fullscreen button for certain games
-  if (url.includes('granny.html') || url.includes('granny2.html')) {
-    document.querySelector('.fullscreen-btn').style.display = 'none';
-  } else {
-    document.querySelector('.fullscreen-btn').style.display = 'block';
-  }
-}
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwr79gF5RqgUkBr0YEX16ayQF4aqdcHxaLRubcOggFvXqp-PiG7tw0uyvr3vlUEpDnC/exec')">
+        <img src="https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/logoBruh.png" alt="Soccer Random" />
+        <div class="game-name">Soccer Random</div>
+        <button class="game-button"><img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" /></button>
+      </div>
 
-// Close modal
-function closeModal() {
-  iframe.src = '';
-  modal.style.display = 'none';
-  document.body.style.overflow = '';
-}
+      <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwWFVSflZjpFKgB73dzoNbl5d044y0_BcfrRyVqgfURdUZHpHJUDEeQS1ABGGqXmFoo/exec')">
+        <img src="https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/logoBruh.png" alt="Boxing Random" />
+        <div class="game-name">Boxing Random</div>
+        <button class="game-button"><img src="https://raw.githubusercontent.com/sigmabread/1234/08670e5862602ecb0e88e45276dbdfa993adeed4/play.png" alt="Play Game" /></button>
+      </div>
+    </div>
 
-// Toggle fullscreen
-function toggleFullscreen() {
-  if (iframe.requestFullscreen) {
-    iframe.requestFullscreen();
-  } else if (iframe.mozRequestFullScreen) {
-    iframe.mozRequestFullScreen();
-  } else if (iframe.webkitRequestFullscreen) {
-    iframe.webkitRequestFullscreen();
-  } else if (iframe.msRequestFullscreen) {
-    iframe.msRequestFullscreen();
-  }
-}
+    <div class="modal" id="gameModal">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeModal()" title="Close">x</button>
+        <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
+        <iframe id="gameIframe" src="" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
 
-// Close modal when clicking outside iframe
-modal.addEventListener('click', e => {
-  if (e.target === modal) closeModal();
-});
+    <div class="toggle-container">
+      <label for="granny-toggle" id="toggle-label">disable jumpscare</label>
+      <input type="checkbox" id="granny-toggle" />
+    </div>
 
-// Escape key closes modal
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && modal.style.display === 'flex') closeModal();
-});
-</script>
-</body>
+    <script>
+      // Search functionality
+      const searchInput = document.getElementById('searchInput');
+      const gameCards = document.querySelectorAll('.game-card');
+
+      searchInput.addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        gameCards.forEach(card => {
+          const gameName = card.querySelector('.game-name').textContent.toLowerCase();
+          if (gameName.includes(searchTerm)) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+
+      // Modal/game code from index2.html
+      const modal = document.getElementById('gameModal');
+      const iframe = document.getElementById('gameIframe');
+      const fullscreenBtn = document.querySelector('.fullscreen-btn');
+      const toggle = document.getElementById('granny-toggle');
+      const toggleLabel = document.getElementById('toggle-label');
+
+      // Load saved toggle state
+      const savedState = localStorage.getItem('grannyToggle');
+      if (savedState !== null) {
+          toggle.checked = JSON.parse(savedState);
+          updateToggleLabel(toggle.checked);
+      }
+
+      // Update state on toggle change
+      toggle.addEventListener('change', function () {
+          localStorage.setItem('grannyToggle', JSON.stringify(this.checked));
+          updateToggleLabel(this.checked);
+      });
+
+      function updateToggleLabel(isChecked) {
+          toggleLabel.textContent = isChecked ? 'enable jumpscare' : 'disable jumpscare';
+      }
+
+      function openGranny(url) {
+        const grannyToggle = document.getElementById('granny-toggle').checked;
+        if (grannyToggle) {
+          const fetchUrl = 'https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/original.html';
+          fetch(fetchUrl)
+            .then(response => {
+              if (!response.ok) throw new Error(`Failed to fetch HTML. Status: ${response.status}`);
+              return response.text();
+            })
+            .then(htmlContent => {
+              document.open();
+              document.write(htmlContent);
+              document.close();
+            })
+            .catch(error => {
+              console.error('Error fetching or injecting HTML:', error);
+              alert('Failed to load the alternate content. Please try again later.');
+            });
+        } else {
+          window.location.href = url;
+        }
+      }
+
+      function openGame(url) {
+        const grannyToggle = toggle.checked;
+        if (grannyToggle && url.includes('granny.html')) {
+            url = 'https://raw.githubusercontent.com/sigmabread/gHub/refs/heads/main/original.html';
+        }
+        if (url.includes('granny.html') || url.includes('granny2.html')) {
+            fullscreenBtn.style.display = 'none';
+        } else {
+            fullscreenBtn.style.display = 'block';
+        }
+        iframe.src = url;
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        iframe.src = '';
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      function toggleFullscreen() {
+        if (iframe.requestFullscreen) {
+            iframe.requestFullscreen();
+        } else if (iframe.mozRequestFullScreen) {
+            iframe.mozRequestFullScreen();
+        } else if (iframe.webkitRequestFullscreen) {
+            iframe.webkitRequestFullscreen();
+        } else if (iframe.msRequestFullscreen) {
+            iframe.msRequestFullscreen();
+        }
+      }
+
+      modal.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modal.style.display === 'flex') {
+            closeModal();
+        }
+      });
+    </script>
+  </body>
 </html>
